@@ -327,6 +327,28 @@
   </row>
   <row>
     <panel>
+      <title>Deployment Clients</title>
+      <table>
+        <search>
+          <query>index="healthcheck" source="$reportdirectory$/deployment_clients_summary.json" 
+| rename result.* AS *
+| table splunk_server, clientName, ip, dns, hostname, package, splunkVersion, utsname</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>Active Users Overview</title>
       <table>
         <search>
@@ -395,28 +417,6 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
       </chart>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Deployment Clients</title>
-      <table>
-        <search>
-          <query>index="healthcheck" source="$reportdirectory$/deployment_clients_summary.json" 
-| rename result.* AS *
-| table splunk_server, clientName, ip, dns, hostname, package, splunkVersion, utsname</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">5</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
     </panel>
   </row>
   <row>
@@ -801,7 +801,7 @@
       <title>Index Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/indexes_summary.json" 
+          <query>index=healthcheck source="/var/engagement_data/ccs_data/utf8/indexes_summary.json" 
 | table result.*
 | rename result.* AS * | table splunk_server, title, app, homePath, homePath_expanded, homePath.maxDataSizeMB, coldPath, coldPath_expanded, coldPath.maxDataSizeMB, disabled, totalEventCount, maxDataSize, maxTotalDataSizeMB, currentDBSizeMB, frozenTimePeriodInSecs,minTime, maxTime, rententionDays, daysSinceEvent</query>
           <earliest>0</earliest>
