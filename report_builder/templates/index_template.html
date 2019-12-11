@@ -82,11 +82,11 @@
                         <ul class="dropdown-menu">
                             <li class="nav-item"><a href="#splunk_servers_table">Splunk Servers</a></li>
                             <li class="nav-item"><a href="#splunk_server_settings_table">Splunk Server Settings</a></li>
+                            <li class="nav-item"><a href="#license_summary_table">License Overview</a></li>
                             <li class="nav-item"><a href="#forwarder_overview_table">Forwarder Overview</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="nav-item"><a href="#scheduler_summary_table">Scheduler Overview</a></li>
-                            <li class="nav-item"><a href="#sources_and_sourcetypes_table">Event Volume by Sourcetype</a>
-                            </li>
+                            <li class="nav-item"><a href="#sources_and_sourcetypes_table">Event Volume by Sourcetype</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="nav-item"><a href="#cpu_usage_overview">CPU Usage</a></li>
                             <li class="nav-item"><a href="#memory_usage">Memory Usage</a></li>
@@ -105,6 +105,10 @@
                             <li class="nav-item" i><a href="#data_inputs_index_mapping">Data Input Overview</a></li>
                             <li class="nav-item" i><a href="#index_volume_summary">Index Volume Overview</a></li>
                             <li class="nav-item" i><a href="#indexes_summary">Index Overview</a></li>
+                            <li class="nav-item"><a href="#search_peer_summary_table">Search Peer Settings</a></li>
+                            <li class="nav-item"><a href="#deployment_client_summary_table">Deployment Client Settings</a></li>
+                            <li class="nav-item"><a href="#deployment_clients_summary_table">Deployment Clients</a></li>
+                            <li class="nav-item"><a href="#cluster_settings_summary_table">Cluster Settings</a></li>
                             <!--<li class="nav-item" i><a href="#index_cluster_bucket_status">Index Cluster Bucket Summary</a></li>-->
                             <li class="nav-item" i><a href="#indexes_by_role_and_user">Index and Role Overview</a></li>
                             <li class="nav-item" i><a href="#role_capability_summary">Role Summary</a></li>
@@ -126,7 +130,6 @@
             </div>
         </div>
     </nav>
-
     <main role="main" class="container">
         <div class="starter-template">
             <div class="container">
@@ -155,6 +158,23 @@
                                     <a class="navbar-brand" href="#splunk_server_settings">Splunk Server Settings</a>
                                     <span class="navbar-text">
                                         <div id="splunk_server_settings_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="license_summary_table" class="data-table">
+                            <caption>
+                                <nav id="license_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#license_summary">License Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="license_summary_toolbar" class="buttons-toolbar"></div>
                                     </span>
                                 </nav>
                             </caption>
@@ -260,7 +280,7 @@
                         <div class="chart-container" style="width:55vw;">
                             <canvas id="license_usage_chart"></canvas>
                         </div>
-
+                
                     </div>
                     <div class="col col-lg-2">&nbsp;</div>
                 </div>
@@ -474,6 +494,86 @@
                                     <a class="navbar-brand" href="#indexes_summary">Index Overview</a>
                                     <span class="navbar-text">
                                         <div id="indexes_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="search_peer_summary_table" class="data-table">
+                            <caption>
+                                <nav id="search_peer_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#search_peer_summary">Search Peer Settings</a>
+                                    <span class="navbar-text">
+                                        <div id="search_peer_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="deployment_client_summary_table" class="data-table">
+                            <caption>
+                                <nav id="deployment_client_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#deployment_client_summary">Deployment Client Settings</a>
+                                    <span class="navbar-text">
+                                        <div id="deployment_client_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="deployment_clients_summary_table" class="data-table">
+                            <caption>
+                                <nav id="deployment_clients_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#deployment_clients_summary">Deployment Clients</a>
+                                    <span class="navbar-text">
+                                        <div id="deployment_clients_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="cluster_settings_summary_table" class="data-table">
+                            <caption>
+                                <nav id="cluster_settings_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#cluster_settings_summary">Cluster Settings</a>
+                                    <span class="navbar-text">
+                                        <div id="cluster_settings_summary_toolbar" class="buttons-toolbar"></div>
                                     </span>
                                 </nav>
                             </caption>
@@ -1127,6 +1227,9 @@
             var server_settings_cols = ["splunk_server", "SPLUNK_DB", "SPLUNK_HOME", "appServerPorts", "enableSplunkWebSSL", "httpport", "kvStoreDisabled", "kvStorePort", "mgmtHostPort", "minFreeSpace", "pass4SymmKey", "serverName", "sessionTimeout", "startwebserver", "trustedIP"];
             makeTable('#splunk_server_settings_table', server_settings_cols, splunk_server_settings);
 
+            var license_summary_cols = ["splunk_server","type","sourcetypes","license","status","expiration_time","quotaGB"];
+            makeTable('#license_summary_table', license_summary_cols, license_summary);
+
             //var forwarder_overview_names = ["Instance", "Type", "Version", "OS", "Architecture", "Status", "Last Connected to Indexers", "Total KB", "Average KB/s", "Average Events/s"];
             var forwarder_overview_cols = ["Instance", "Type", "Version", "OS", "Architecture", "Status", "Last Connected to Indexers", "Total KB"];
             makeTable('#forwarder_overview_table', forwarder_overview_cols, forwarder_status);
@@ -1163,6 +1266,18 @@
 
             var indexes_summary_cols = ["splunk_server", "title", "app", "homePath", "homePath_expanded", "homePath.maxDataSizeMB", "coldPath", "coldPath_expanded", "coldPath.maxDataSizeMB", "disabled", "totalEventCount", "maxDataSize", "maxTotalDataSizeMB", "currentDBSizeMB", "frozenTimePeriodInSecs", "minTime", "maxTime", "rententionDays", "daysSinceEvent"];
             makeTable('#indexes_summary_table', indexes_summary_cols, indexes_summary);
+
+            var search_peer_summary_cols = ["splunk_server", "cluster_label", "guid", "title", "host", "host_fqdn", "status. version", "os_name", "isForwarding", "is_https", "peerName", "peerType", "replicationStatus", "rtsearch_enabled", "search_groups","searchable_indexes"];
+            makeTable('#search_peer_summary_table', search_peer_summary_cols, search_peer_summary);
+
+            var deployment_client_summary_cols = ["splunk_server","serverClasses","targetUri","clientName"];
+            makeTable('#deployment_client_summary_table', deployment_client_summary_cols, deployment_client_summary);
+
+            var deployment_clients_summary_cols = ["splunk_server", "clientName", "ip", "dns", "hostname", "package", "splunkVersion","utsname"];
+            makeTable('#deployment_clients_summary_table', deployment_clients_summary_cols, deployment_clients_summary);
+
+            var cluster_settings_summary_cols = ["splunk_server", "cluster_label", "mode", "forwarderdata_rcv_port", "forwarderdata_use_ssl", "guid", "manual_detention", "multisite", "site", "site_replication_factor", "site_search_factor", "search_factor", "replication_factor", "replication_port", "replication_use_ssl", "rolling_restart","summary_replication"];
+            makeTable('#cluster_settings_summary_table', cluster_settings_summary_cols, cluster_settings_summary); 
 
             //var index_cluster_bucket_status_cols = ["splunk_server","title","is_searchable","failureCount","expectedBuckets *","site *"];
             //makeTable('#index_cluster_bucket_status_table', index_cluster_bucket_status_cols, index_cluster_bucket_status);

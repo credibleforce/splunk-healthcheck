@@ -9,12 +9,10 @@ import html
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 # get args
-parser = argparse.ArgumentParser(description="Create Engagment Report")
-group = parser.add_mutually_exclusive_group()
+parser = argparse.ArgumentParser(description="Create Engagment Report", add_help=True)
 parser.add_argument("-c", "--customer", type=str, help="Customer name", default="Customer")
 parser.add_argument("-d", "--data", type=str, help="Import data directory",
                     default=os.path.join(script_dir, "engagement_data"))
-parser.add_argument('--feature', dest='feature', action='store_true')
 parser.add_argument("-b", "--bundle", help="Bundle the data objects into the HTML page", action='store_true', default=False)
 args = parser.parse_args()
 
@@ -26,7 +24,7 @@ print("Customer: {0}".format(customer_name))
 print("Import Data Path: {0}".format(import_data_path))
 
 engagement_data_name = "{0}_engagement_data.js".format(re.sub(r"[^\w\s]", '', re.sub(r"\s+", '-', customer_name.lower())))
-engagment_data_path = os.path.join(script_dir,"dist",engagement_data_name)
+engagment_data_path = os.path.join(script_dir,"output",engagement_data_name)
 
 embed_data = True
 
@@ -56,12 +54,12 @@ table = f.read()
 
 # build index and js data files
 f_data = open(engagment_data_path, 'w+')
-f_index= open(os.path.join(script_dir,"dist","index.html"),'w+')
+f_index = open(os.path.join(script_dir, "output", "index.html"), 'w+')
 
 for r in reports:
     r_data = []
     print(os.path.join(import_data_path, "{0}.json".format(r)))
-    with io.open(os.path.join(import_data_path, "{0}.json".format(r)), 'r', encoding='utf-16-le') as f:
+    with io.open(os.path.join(import_data_path, "{0}.json".format(r)), 'r') as f:
         for line in f:
             try:
                 r_data.append(json.loads(line.encode('ascii', 'ignore')))
