@@ -1,0 +1,24 @@
+﻿$SPLUNK_HOME = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | % { if($_.DisplayName -eq "Splunk Enterprise") { $_.InstallLocation } }
+
+$splunk_user = Read-Host 'Splunk Username'
+$splunk_pwd = Read-Host 'Splunk Password' -AsSecureString
+$splunk_auth = $("{0}:{1}" -f $splunk_user,[Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($splunk_pwd)))
+
+Get-Content $("{0}\etc\apps\engagement_healthcheck\local\savedsearches.conf" -f $SPLUNK_HOME) | select-string -pattern '^\[([^\]]+)\]$' -AllMatches | % { 
+    $savedsearch = $_.matches.groups[1].value
+    $SPLUNK_BIN = $("{0}bin\splunk" -f $SPLUNK_HOME) 
+    write-output $("Exporting: {0}" -f $savedsearch)
+    write-output $("Running: {0}" -f  $command)
+    &$SPLUNK_BIN $args search  $("| savedsearch {0}" -f $savedsearch) -auth $splunk_auth -app engagement_healthcheck -maxout 0 -preview 0 -output json -earliest_time -24h -latest_time now > $("{0}/engagement_data/{1}.json" -f $PSScriptRoot,$savedsearch)
+    write-output "Complete."
+}
+
+write-output "Compressing..."
+$source = $("{0}/engagement_data" -f $PSScriptRoot)
+$destination = $("{0}/engagement_data.zip" -f $PSScriptRoot)
+If(Test-path $destination) {Remove-item $destination}
+Add-Type -assembly "system.io.compression.filesystem"
+[io.compression.zipfile]::CreateFromDirectory($Source, $destination) 
+Read-Host "Done. Please send engagement_data.zip to PS Engineer"
+
+

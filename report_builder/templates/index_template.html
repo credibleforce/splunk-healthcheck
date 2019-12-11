@@ -1,0 +1,1218 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Engagement Report</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/chart.js@2.9.3/dist//Chart.min.js"></script>
+
+
+    <script
+        src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+    <style>
+        body {
+            padding-top: 5rem;
+        }
+
+        .starter-template {
+            padding: 1rem 1.5rem;
+        }
+
+        .data-table {
+            padding: 3rem 1.5rem;
+        }
+
+        caption {
+            caption-side: top;
+        }
+
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .dropdown-menu {
+            padding: 0.5rem 1.5rem;
+            width: 20rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="#"><<CUSTOMER_NAME>> - Engagment Healthcheck</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Section <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item"><a href="#splunk_servers_table">Splunk Servers</a></li>
+                            <li class="nav-item"><a href="#splunk_server_settings_table">Splunk Server Settings</a></li>
+                            <li class="nav-item"><a href="#forwarder_overview_table">Forwarder Overview</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item"><a href="#scheduler_summary_table">Scheduler Overview</a></li>
+                            <li class="nav-item"><a href="#sources_and_sourcetypes_table">Event Volume by Sourcetype</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item"><a href="#cpu_usage_overview">CPU Usage</a></li>
+                            <li class="nav-item"><a href="#memory_usage">Memory Usage</a></li>
+                            <li class="nav-item"><a href="#license_usage">License Usage</a></li>
+                            <li class="nav-item"><a href="#search_volume">Search Volume</a></li>
+                            <li class="nav-item"><a href="#adhoc_searches">Ad-hoc Search Volume</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item"><a href="#searches_by_duration_table">Searches by Duration</a></li>
+                            <li class="nav-item"><a href="#scheduled_search_skipped_searches_table">Skipped Scheduled
+                                    Searches</a></li>
+                            <li class="nav-item"><a href="#searches_exceeding_frequency_table">Search Duration Exceeding
+                                    Frequency</a></li>
+                            <li class="nav-item" i><a href="#active_users_table">Active Users</a></li>
+                            <li class="nav-item" i><a href="#data_onboarding_issues">Data Onboarding Issues</a></li>
+                            <li class="nav-item" i><a href="#indexes_with_time_skew">Indexes with Time Skew</a></li>
+                            <li class="nav-item" i><a href="#data_inputs_index_mapping">Data Input Overview</a></li>
+                            <li class="nav-item" i><a href="#index_volume_summary">Index Volume Overview</a></li>
+                            <li class="nav-item" i><a href="#indexes_summary">Index Overview</a></li>
+                            <!--<li class="nav-item" i><a href="#index_cluster_bucket_status">Index Cluster Bucket Summary</a></li>-->
+                            <li class="nav-item" i><a href="#indexes_by_role_and_user">Index and Role Overview</a></li>
+                            <li class="nav-item" i><a href="#role_capability_summary">Role Summary</a></li>
+                            <li class="nav-item" i><a href="#role_heirarchy">Role Inheritance Overview</a></li>
+                            <li class="nav-item" i><a href="#apps">Apps Overview</a></li>
+                            <li class="nav-item" i><a href="#schedule_search_summary">Schedule Search Overview</a></li>
+                            <li class="nav-item" i><a href="#data_model_summary">Datmodel Overview</a></li>
+                            <li class="nav-item" i><a href="#search_best_practices_index_and_sourcetype">Search Best
+                                    Practices Overview</a></li>
+                            <li class="nav-item" i><a href="#scheduled_searches_high_concurrency_by_minute">Schedules
+                                    Search Concurrenct Overview</a></li>
+                            <li class="nav-item" i><a href="#datamodel_incomplete_datamodels">Incomplete Data Models</a>
+                            </li>
+                            <li class="nav-item" i><a href="private_accelerated_reports">Private Accelerated
+                                    Searches</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="starter-template">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto">
+                        <table id="splunk_servers_table" class="data-table">
+                            <caption>
+                                <nav id="splunk_servers" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#splunk_servers">Splunk Servers</a>
+                                    <span class="navbar-text">
+                                        <div id="splunk_servers_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto">
+                        <table id="splunk_server_settings_table" class="data-table">
+                            <caption>
+                                <nav id="splunk_server_settings" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#splunk_server_settings">Splunk Server Settings</a>
+                                    <span class="navbar-text">
+                                        <div id="splunk_server_settings_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto">
+                        <table id="forwarder_overview_table" class="data-table">
+                            <caption>
+                                <nav id="forwarder_overview" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#forwarder_overview">Forwarder Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="forwarder_overview_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto">
+                        <table id="scheduler_summary_table" class="data-table">
+                            <caption>
+                                <nav id="scheduler_overview" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#scheduler_overview">Scheduler Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="scheduler_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="sources_and_sourcetypes_table" class="data-table">
+                            <caption>
+                                <nav id="sources_and_sourcetypes" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#sources_and_sourcetypes">Event Volume by
+                                        Sourcetype</a>
+                                    <span class="navbar-text">
+                                        <div id="sources_and_sourcetypes_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="height: 550px; ">
+                        <caption>
+                            <nav id="cpu_usage_overview" class="navbar navbar-expand-lg navbar-light bg-light">
+                                <a class="navbar-brand" href="#cpu_usage_overview">CPU Usage Overview</a>
+                                <span class="navbar-text">
+                                    &nbsp;
+                                </span>
+                            </nav>
+                        </caption>
+                        <div class="chart-container" style="width:55vw;">
+                            <canvas id="cpu_usage_overview_chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="height: 550px; ">
+                        <caption>
+                            <nav id="memory_usage" class="navbar navbar-expand-lg navbar-light bg-light">
+                                <a class="navbar-brand" href="#memory_usage">Memory Usage Overview</a>
+                                <span class="navbar-text">
+                                    &nbsp;
+                                </span>
+                            </nav>
+                        </caption>
+                        <div class="chart-container" style="width:55vw;">
+                            <canvas id="memory_usage_chart" ></canvas>
+                        </div>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="height: 550px; ">
+                        <caption>
+                            <nav id="license_usage" class="navbar navbar-expand-lg navbar-light bg-light">
+                                <a class="navbar-brand" href="#license_usage">License Usage Overview</a>
+                                <span class="navbar-text">
+                                    &nbsp;
+                                </span>
+                            </nav>
+                        </caption>
+                        <div class="chart-container" style="width:55vw;">
+                            <canvas id="license_usage_chart"></canvas>
+                        </div>
+
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="height: 550px; ">
+                        <caption>
+                            <nav id="search_volume" class="navbar navbar-expand-lg navbar-light bg-light">
+                                <a class="navbar-brand" href="#search_volume">Search Volume</a>
+                                <span class="navbar-text">
+                                    &nbsp;
+                                </span>
+                            </nav>
+                        </caption>
+                        <div class="chart-container" style="width:55vw;">
+                            <canvas id="search_volume_chart"></canvas>
+                        </div>
+
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">&nbsp;</div>
+                    <div class="col-md-auto" style="height: 550px; ">
+                        <caption>
+                            <nav id="adhoc_searches" class="navbar navbar-expand-lg navbar-light bg-light">
+                                <a class="navbar-brand" href="#adhoc_searches">Ad-hoc Search Volume</a>
+                                <span class="navbar-text">
+                                    &nbsp;
+                                </span>
+                            </nav>
+                        </caption>
+                        <div class="chart-container" style="width:55vw;">
+                            <canvas id="adhoc_searches_chart"></canvas>
+                        </div>
+
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                        <table id="searches_by_duration_table" class="data-table">
+                            <caption>
+                                <nav id="searches_by_duration" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#searches_by_duration">Searches by Duration
+                                        Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="searches_by_duration_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                        <table id="scheduled_search_skipped_searches_table" class="data-table">
+                            <caption>
+                                <nav id="scheduled_search_skipped_searches"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#scheduled_search_skipped_searches">Skipped Scheduled
+                                        Searches</a>
+                                    <span class="navbar-text">
+                                        <div id="scheduled_search_skipped_searches_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                        <table id="searches_exceeding_frequency_table" class="data-table">
+                            <caption>
+                                <nav id="searches_exceeding_frequency"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#searches_exceeding_frequency">Searches Exceeding
+                                        Frequences</a>
+                                    <span class="navbar-text">
+                                        <div id="searches_exceeding_frequency_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="active_users_table" class="data-table">
+                            <caption>
+                                <nav id="active_users" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#active_users">Active Users Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="active_users_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="data_onboarding_issues_table" class="data-table">
+                            <caption>
+                                <nav id="data_onboarding_issues" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#data_onboarding_issues">Data Onboarding Issues</a>
+                                    <span class="navbar-text">
+                                        <div id="data_onboarding_issues_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="indexes_with_time_skew_table" class="data-table">
+                            <caption>
+                                <nav id="indexes_with_time_skew" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#indexes_with_time_skew">Indexes with Time Skew</a>
+                                    <span class="navbar-text">
+                                        <div id="indexes_with_time_skew_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="data_inputs_index_mapping_table" class="data-table">
+                            <caption>
+                                <nav id="data_inputs_index_mapping"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#data_inputs_index_mapping">Data Input Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="data_inputs_index_mapping_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="index_volume_summary_table" class="data-table">
+                            <caption>
+                                <nav id="index_volume_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#index_volume_summary">Index Volume Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="index_volume_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="indexes_summary_table" class="data-table">
+                            <caption>
+                                <nav id="indexes_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#indexes_summary">Index Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="indexes_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <!--<div class="row justify-content-md-center">
+					<div class="col col-lg-2">
+						&nbsp;
+					</div>
+					<div class="col-md-auto" style="width:100%">
+				
+						<table id="index_cluster_bucket_status_table" class="data-table">
+							<caption>
+								<nav id="index_cluster_bucket_status" class="navbar navbar-expand-lg navbar-light bg-light">
+									<a class="navbar-brand" href="#index_cluster_bucket_status">Index Cluster Bucket Summary</a>
+									<span class="navbar-text">
+										<div class="buttons-toolbar"></div>
+									</span>
+								</nav>
+							</caption>
+						</table>
+					</div>
+					<div class="col col-lg-2">&nbsp;</div>
+				</div>-->
+
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="indexes_by_role_and_user_table" class="data-table">
+                            <caption>
+                                <nav id="indexes_by_role_and_user"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#indexes_by_role_and_user">Index and Role Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="indexes_by_role_and_user_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="role_capability_summary_table" class="data-table">
+                            <caption>
+                                <nav id="role_capability_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#role_capability_summary">Role Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="role_capability_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="role_heirarchy_table" class="data-table">
+                            <caption>
+                                <nav id="role_heirarchy" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#role_heirarchy">Role Inheritance Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="role_heirarchy_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="apps_table" class="data-table">
+                            <caption>
+                                <nav id="apps" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#apps">Apps Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="apps_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="schedule_search_summary_table" class="data-table">
+                            <caption>
+                                <nav id="schedule_search_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#schedule_search_summary">Scheduled Search
+                                        Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="schedule_search_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="data_model_summary_table" class="data-table">
+                            <caption>
+                                <nav id="data_model_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#data_model_summary">Datamodel Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="data_model_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="search_best_practices_index_and_sourcetype_table" class="data-table">
+                            <caption>
+                                <nav id="search_best_practices_index_and_sourcetype"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#search_best_practices_index_and_sourcetype">Search
+                                        Best Practices Overview</a>
+                                    <span class="navbar-text">
+                                        <div id="search_best_practices_index_and_sourcetype_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="scheduled_searches_high_concurrency_by_minute_table" class="data-table">
+                            <caption>
+                                <nav id="scheduled_searches_high_concurrency_by_minute"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand"
+                                        href="#scheduled_searches_high_concurrency_by_minute">Schedule Search
+                                        Concurrency</a>
+                                    <span class="navbar-text">
+                                        <div id="scheduled_searches_high_concurrency_by_minute_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="datamodel_incomplete_datamodels_table" class="data-table">
+                            <caption>
+                                <nav id="datamodel_incomplete_datamodels"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#datamodel_incomplete_datamodels">Incomplete
+                                        Datamodels</a>
+                                    <span class="navbar-text">
+                                        <div id="datamodel_incomplete_datamodels_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+
+                        <table id="private_accelerated_reports_table" class="data-table">
+                            <caption>
+                                <nav id="private_accelerated_reports"
+                                    class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#private_accelerated_reports">Private Accelerated
+                                        Searches</a>
+                                    <span class="navbar-text">
+                                        <div id="private_accelerated_reports_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+
+    <<ENGAGEMENT_DATA>>
+    
+    <script>
+        // chart disaply 
+        var chartColors = ['332288', '6699cc', '88ccee', '44aa99', '117733', '999933', 'ddcc77', '661100', 'cc6677', 'aa4466', '882255', 'aa4499'];
+        var tz_array = [
+                { "short": "ACDT", "long": "Australian Central Daylight Savings Time", "offset": "UTC+10:30" },
+                { "short": "ACST", "long": "Australian Central Standard Time", "offset": "UTC+09:30" },
+                { "short": "ACT", "long": "Acre Time", "offset": "UTC−05" },
+                { "short": "ACT", "long": "ASEAN Common Time", "offset": "UTC+06:30 – UTC+09" },
+                { "short": "ACWST", "long": "Australian Central Western Standard Time","offset":"UTC + 08: 45"},
+	{ "short": "ADT", "long": "Atlantic Daylight Time", "offset": "UTC−03" },
+                { "short": "AEDT", "long": "Australian Eastern Daylight Savings Time", "offset": "UTC+11" },
+                { "short": "AEST", "long": "Australian Eastern Standard Time", "offset": "UTC+10" },
+                { "short": "AFT", "long": "Afghanistan Time", "offset": "UTC+04:30" },
+                { "short": "AKDT", "long": "Alaska Daylight Time", "offset": "UTC−08" },
+                { "short": "AKST", "long": "Alaska Standard Time", "offset": "UTC−09" },
+                { "short": "ALMT", "long": "Alma-Ata Time", "offset": "UTC+06" },
+                { "short": "AMST", "long": "Amazon Summer Time", "offset": "UTC−03" },
+                { "short": "AMT", "long": "Amazon Time", "offset": "UTC−04" },
+                { "short": "AMT", "long": "Armenia Time", "offset": "UTC+04" },
+                { "short": "ANAT", "long": "Anadyr Time", "offset": "UTC+12" },
+                { "short": "AQTT", "long": "Aqtobe Time", "offset": "UTC+05" },
+                { "short": "ART", "long": "Argentina Time", "offset": "UTC−03" },
+                { "short": "AST", "long": "Arabia Standard Time", "offset": "UTC+03" },
+                { "short": "AST", "long": "Atlantic Standard Time", "offset": "UTC−04" },
+                { "short": "AWST", "long": "Australian Western Standard Time", "offset": "UTC+08" },
+                { "short": "AZOST", "long": "Azores Summer Time", "offset": "UTC±00" },
+                { "short": "AZOT", "long": "Azores Standard Time", "offset": "UTC−01" },
+                { "short": "AZT", "long": "Azerbaijan Time", "offset": "UTC+04" },
+                { "short": "BDT", "long": "Brunei Time", "offset": "UTC+08" },
+                { "short": "BIOT", "long": "British Indian Ocean Time", "offset": "UTC+06" },
+                { "short": "BIT", "long": "Baker Island Time", "offset": "UTC−12" },
+                { "short": "BOT", "long": "Bolivia Time", "offset": "UTC−04" },
+                { "short": "BRST", "long": "Brasília Summer Time", "offset": "UTC−02" },
+                { "short": "BRT", "long": "Brasília Time", "offset": "UTC−03" },
+                { "short": "BST", "long": "Bangladesh Standard Time", "offset": "UTC+06" },
+                { "short": "BST", "long": "Bougainville Standard Time", "offset": "UTC+11" },
+                { "short": "BST", "long": "British Summer Time","offset":"UTC + 01"},
+	{ "short": "BTT", "long": "Bhutan Time", "offset": "UTC+06" },
+                { "short": "CAT", "long": "Central Africa Time", "offset": "UTC+02" },
+                { "short": "CCT", "long": "Cocos Islands Time", "offset": "UTC+06:30" },
+                { "short": "CDT", "long": "Central Daylight Time","offset":"UTC−05"},
+	{ "short": "CDT", "long": "Cuba Daylight Time", "offset": "UTC−04" },
+                { "short": "CEST", "long": "Central European Summer Time","offset":"UTC + 02"},
+	{ "short": "CET", "long": "Central European Time", "offset": "UTC+01" },
+                { "short": "CHADT", "long": "Chatham Daylight Time", "offset": "UTC+13:45" },
+                { "short": "CHAST", "long": "Chatham Standard Time", "offset": "UTC+12:45" },
+                { "short": "CHOST", "long": "Choibalsan Summer Time", "offset": "UTC+09" },
+                { "short": "CHOT", "long": "Choibalsan Standard Time", "offset": "UTC+08" },
+                { "short": "CHST", "long": "Chamorro Standard Time", "offset": "UTC+10" },
+                { "short": "CHUT", "long": "Chuuk Time", "offset": "UTC+10" },
+                { "short": "CIST", "long": "Clipperton Island Standard Time", "offset": "UTC−08" },
+                { "short": "CIT", "long": "Central Indonesia Time", "offset": "UTC+08" },
+                { "short": "CKT", "long": "Cook Island Time", "offset": "UTC−10" },
+                { "short": "CLST", "long": "Chile Summer Time", "offset": "UTC−03" },
+                { "short": "CLT", "long": "Chile Standard Time", "offset": "UTC−04" },
+                { "short": "COST", "long": "Colombia Summer Time", "offset": "UTC−04" },
+                { "short": "COT", "long": "Colombia Time", "offset": "UTC−05" },
+                { "short": "CST", "long": "Central Standard Time","offset":"UTC−06"},
+	{ "short": "CST", "long": "China Standard Time", "offset": "UTC+08" },
+                { "short": "CST", "long": "Cuba Standard Time", "offset": "UTC−05" },
+                { "short": "CT", "long": "China Time", "offset": "UTC+08" },
+                { "short": "CVT", "long": "Cape Verde Time", "offset": "UTC−01" },
+                { "short": "CWST", "long": "Central Western Standard Time","offset":"UTC + 08: 45"},
+	{ "short": "CXT", "long": "Christmas Island Time", "offset": "UTC+07" },
+                { "short": "DAVT", "long": "Davis Time", "offset": "UTC+07" },
+                { "short": "DDUT", "long": "Dumont d'Urville Time", "offset": "UTC+10" },
+                { "short": "DFT", "long": "AIX-specific equivalent of Central European Time[NB 1]", "offset": "UTC+01" },
+                { "short": "EASST", "long": "Easter Island Summer Time", "offset": "UTC−05" },
+                { "short": "EAST", "long": "Easter Island Standard Time", "offset": "UTC−06" },
+                { "short": "EAT", "long": "East Africa Time", "offset": "UTC+03" },
+                { "short": "ECT", "long": "Eastern Caribbean Time","offset":"UTC−04"},
+	{ "short": "ECT", "long": "Ecuador Time", "offset": "UTC−05" },
+                { "short": "EDT", "long": "Eastern Daylight Time","offset":"UTC−04"},
+	{ "short": "EEST", "long": "Eastern European Summer Time", "offset": "UTC+03" },
+                { "short": "EET", "long": "Eastern European Time", "offset": "UTC+02" },
+                { "short": "EGST", "long": "Eastern Greenland Summer Time", "offset": "UTC±00" },
+                { "short": "EGT", "long": "Eastern Greenland Time", "offset": "UTC−01" },
+                { "short": "EIT", "long": "Eastern Indonesian Time", "offset": "UTC+09" },
+                { "short": "EST", "long": "Eastern Standard Time","offset":"UTC−05"},
+	{ "short": "FET", "long": "Further-eastern European Time", "offset": "UTC+03" },
+                { "short": "FJT", "long": "Fiji Time", "offset": "UTC+12" },
+                { "short": "FKST", "long": "Falkland Islands Summer Time", "offset": "UTC−03" },
+                { "short": "FKT", "long": "Falkland Islands Time", "offset": "UTC−04" },
+                { "short": "FNT", "long": "Fernando de Noronha Time", "offset": "UTC−02" },
+                { "short": "GALT", "long": "Galápagos Time", "offset": "UTC−06" },
+                { "short": "GAMT", "long": "Gambier Islands Time", "offset": "UTC−09" },
+                { "short": "GET", "long": "Georgia Standard Time", "offset": "UTC+04" },
+                { "short": "GFT", "long": "French Guiana Time", "offset": "UTC−03" },
+                { "short": "GILT", "long": "Gilbert Island Time", "offset": "UTC+12" },
+                { "short": "GIT", "long": "Gambier Island Time", "offset": "UTC−09" },
+                { "short": "GMT", "long": "Greenwich Mean Time", "offset": "UTC±00" },
+                { "short": "GST", "long": "South Georgia and the South Sandwich Islands Time", "offset": "UTC−02" },
+                { "short": "GST", "long": "Gulf Standard Time", "offset": "UTC+04" },
+                { "short": "GYT", "long": "Guyana Time", "offset": "UTC−04" },
+                { "short": "HAEC", "long": "Heure Avancée d'Europe Centrale French-language name for CEST", "offset": "UTC+02" },
+                { "short": "HDT", "long": "Hawaii–Aleutian Daylight Time", "offset": "UTC−09" },
+                { "short": "HKT", "long": "Hong Kong Time", "offset": "UTC+08" },
+                { "short": "HMT", "long": "Heard and McDonald Islands Time", "offset": "UTC+05" },
+                { "short": "HOVST", "long": "Hovd Summer Time","offset":"UTC + 08"},
+	{ "short": "HOVT", "long": "Hovd Time", "offset": "UTC+07" },
+                { "short": "HST", "long": "Hawaii–Aleutian Standard Time", "offset": "UTC−10" },
+                { "short": "ICT", "long": "Indochina Time", "offset": "UTC+07" },
+                { "short": "IDLW", "long": "International Day Line West time zone", "offset": "UTC−12" },
+                { "short": "IDT", "long": "Israel Daylight Time", "offset": "UTC+03" },
+                { "short": "IOT", "long": "Indian Ocean Time", "offset": "UTC+03" },
+                { "short": "IRDT", "long": "Iran Daylight Time", "offset": "UTC+04:30" },
+                { "short": "IRKT", "long": "Irkutsk Time", "offset": "UTC+08" },
+                { "short": "IRST", "long": "Iran Standard Time", "offset": "UTC+03:30" },
+                { "short": "IST", "long": "Indian Standard Time", "offset": "UTC+05:30" },
+                { "short": "IST", "long": "Irish Standard Time", "offset": "UTC+01" },
+                { "short": "IST", "long": "Israel Standard Time", "offset": "UTC+02" },
+                { "short": "JST", "long": "Japan Standard Time", "offset": "UTC+09" },
+                { "short": "KALT", "long": "Kaliningrad Time", "offset": "UTC+02" },
+                { "short": "KGT", "long": "Kyrgyzstan Time", "offset": "UTC+06" },
+                { "short": "KOST", "long": "Kosrae Time", "offset": "UTC+11" },
+                { "short": "KRAT", "long": "Krasnoyarsk Time", "offset": "UTC+07" },
+                { "short": "KST", "long": "Korea Standard Time", "offset": "UTC+09" },
+                { "short": "LHST", "long": "Lord Howe Standard Time", "offset": "UTC+10:30" },
+                { "short": "LHST", "long": "Lord Howe Summer Time", "offset": "UTC+11" },
+                { "short": "LINT", "long": "Line Islands Time", "offset": "UTC+14" },
+                { "short": "MAGT", "long": "Magadan Time", "offset": "UTC+12" },
+                { "short": "MART", "long": "Marquesas Islands Time", "offset": "UTC−09:30" },
+                { "short": "MAWT", "long": "Mawson Station Time", "offset": "UTC+05" },
+                { "short": "MDT", "long": "Mountain Daylight Time","offset":"UTC−06"},
+	{ "short": "MEST", "long": "Middle European Summer Time Same zone as CEST", "offset": "UTC+02" },
+                { "short": "MET", "long": "Middle European Time Same zone as CET", "offset": "UTC+01" },
+                { "short": "MHT", "long": "Marshall Islands Time", "offset": "UTC+12" },
+                { "short": "MIST", "long": "Macquarie Island Station Time", "offset": "UTC+11" },
+                { "short": "MIT", "long": "Marquesas Islands Time", "offset": "UTC−09:30" },
+                { "short": "MMT", "long": "Myanmar Standard Time", "offset": "UTC+06:30" },
+                { "short": "MSK", "long": "Moscow Time", "offset": "UTC+03" },
+                { "short": "MST", "long": "Malaysia Standard Time", "offset": "UTC+08" },
+                { "short": "MST", "long": "Mountain Standard Time","offset":"UTC−07"},
+	{ "short": "MUT", "long": "Mauritius Time", "offset": "UTC+04" },
+                { "short": "MVT", "long": "Maldives Time", "offset": "UTC+05" },
+                { "short": "MYT", "long": "Malaysia Time", "offset": "UTC+08" },
+                { "short": "NCT", "long": "New Caledonia Time", "offset": "UTC+11" },
+                { "short": "NDT", "long": "Newfoundland Daylight Time", "offset": "UTC−02:30" },
+                { "short": "NFT", "long": "Norfolk Island Time", "offset": "UTC+11" },
+                { "short": "NOVT", "long": "Novosibirsk Time ", "offset": "UTC+07" },
+                { "short": "NPT", "long": "Nepal Time", "offset": "UTC+05:45" },
+                { "short": "NST", "long": "Newfoundland Standard Time", "offset": "UTC−03:30" },
+                { "short": "NT", "long": "Newfoundland Time", "offset": "UTC−03:30" },
+                { "short": "NUT", "long": "Niue Time", "offset": "UTC−11" },
+                { "short": "NZDT", "long": "New Zealand Daylight Time", "offset": "UTC+13" },
+                { "short": "NZST", "long": "New Zealand Standard Time", "offset": "UTC+12" },
+                { "short": "OMST", "long": "Omsk Time", "offset": "UTC+06" },
+                { "short": "ORAT", "long": "Oral Time", "offset": "UTC+05" },
+                { "short": "PDT", "long": "Pacific Daylight Time","offset":"UTC−07"},
+	{ "short": "PET", "long": "Peru Time", "offset": "UTC−05" },
+                { "short": "PETT", "long": "Kamchatka Time", "offset": "UTC+12" },
+                { "short": "PGT", "long": "Papua New Guinea Time", "offset": "UTC+10" },
+                { "short": "PHOT", "long": "Phoenix Island Time", "offset": "UTC+13" },
+                { "short": "PHT", "long": "Philippine Time", "offset": "UTC+08" },
+                { "short": "PKT", "long": "Pakistan Standard Time", "offset": "UTC+05" },
+                { "short": "PMDT", "long": "Saint Pierre and Miquelon Daylight Time", "offset": "UTC−02" },
+                { "short": "PMST", "long": "Saint Pierre and Miquelon Standard Time", "offset": "UTC−03" },
+                { "short": "PONT", "long": "Pohnpei Standard Time", "offset": "UTC+11" },
+                { "short": "PST", "long": "Pacific Standard Time","offset":"UTC−08"},
+	{ "short": "PST", "long": "Philippine Standard Time", "offset": "UTC+08" },
+                { "short": "PYST", "long": "Paraguay Summer Time", "offset": "UTC−03" },
+                { "short": "PYT", "long": "Paraguay Time", "offset": "UTC−04" },
+                { "short": "RET", "long": "Réunion Time", "offset": "UTC+04" },
+                { "short": "ROTT", "long": "Rothera Research Station Time", "offset": "UTC−03" },
+                { "short": "SAKT", "long": "Sakhalin Island Time", "offset": "UTC+11" },
+                { "short": "SAMT", "long": "Samara Time", "offset": "UTC+04" },
+                { "short": "SAST", "long": "South African Standard Time", "offset": "UTC+02" },
+                { "short": "SBT", "long": "Solomon Islands Time", "offset": "UTC+11" },
+                { "short": "SCT", "long": "Seychelles Time", "offset": "UTC+04" },
+                { "short": "SDT", "long": "Samoa Daylight Time", "offset": "UTC−10" },
+                { "short": "SGT", "long": "Singapore Time", "offset": "UTC+08" },
+                { "short": "SLST", "long": "Sri Lanka Standard Time", "offset": "UTC+05:30" },
+                { "short": "SRET", "long": "Srednekolymsk Time", "offset": "UTC+11" },
+                { "short": "SRT", "long": "Suriname Time", "offset": "UTC−03" },
+                { "short": "SST", "long": "Samoa Standard Time", "offset": "UTC−11" },
+                { "short": "SST", "long": "Singapore Standard Time", "offset": "UTC+08" },
+                { "short": "SYOT", "long": "Showa Station Time", "offset": "UTC+03" },
+                { "short": "TAHT", "long": "Tahiti Time", "offset": "UTC−10" },
+                { "short": "TFT", "long": "French Southern and Antarctic Time", "offset": "UTC+05" },
+                { "short": "THA", "long": "Thailand Standard Time", "offset": "UTC+07" },
+                { "short": "TJT", "long": "Tajikistan Time", "offset": "UTC+05" },
+                { "short": "TKT", "long": "Tokelau Time", "offset": "UTC+13" },
+                { "short": "TLT", "long": "Timor Leste Time", "offset": "UTC+09" },
+                { "short": "TMT", "long": "Turkmenistan Time", "offset": "UTC+05" },
+                { "short": "TOT", "long": "Tonga Time", "offset": "UTC+13" },
+                { "short": "TRT", "long": "Turkey Time", "offset": "UTC+03" },
+                { "short": "TVT", "long": "Tuvalu Time", "offset": "UTC+12" },
+                { "short": "ULAST", "long": "Ulaanbaatar Summer Time", "offset": "UTC+09" },
+                { "short": "ULAT", "long": "Ulaanbaatar Standard Time", "offset": "UTC+08" },
+                { "short": "UTC", "long": "Coordinated Universal Time", "offset": "UTC±00" },
+                { "short": "UYST", "long": "Uruguay Summer Time", "offset": "UTC−02" },
+                { "short": "UYT", "long": "Uruguay Standard Time", "offset": "UTC−03" },
+                { "short": "UZT", "long": "Uzbekistan Time", "offset": "UTC+05" },
+                { "short": "VET", "long": "Venezuelan Standard Time", "offset": "UTC−04" },
+                { "short": "VLAT", "long": "Vladivostok Time", "offset": "UTC+10" },
+                { "short": "VOLT", "long": "Volgograd Time", "offset": "UTC+04" },
+                { "short": "VOST", "long": "Vostok Station Time", "offset": "UTC+06" },
+                { "short": "VUT", "long": "Vanuatu Time", "offset": "UTC+11" },
+                { "short": "WAKT", "long": "Wake Island Time", "offset": "UTC+12" },
+                { "short": "WAST", "long": "West Africa Summer Time", "offset": "UTC+02" },
+                { "short": "WAT", "long": "West Africa Time", "offset": "UTC+01" },
+                { "short": "WEST", "long": "Western European Summer Time", "offset": "UTC+01" },
+                { "short": "WET", "long": "Western European Time", "offset": "UTC±00" },
+                { "short": "WIT", "long": "Western Indonesian Time", "offset": "UTC+07" },
+                { "short": "WST", "long": "Western Standard Time", "offset": "UTC+08" },
+                { "short": "YAKT", "long": "Yakutsk Time", "offset": "UTC+09" },
+                { "short": "YEKT", "long": "Yekaterinburg Time", "offset": "UTC+05" }
+            ];
+        
+        function makePieChart(element, data, key_name, value_name) {
+            var ctx = document.getElementById(element).getContext('2d');
+            var labels = [];
+            var datasets = [];
+            var dataKeys = [];
+            var index = 0;
+
+            data.forEach(function (dataObject) {
+                var key = dataObject.result[key_name];
+                var value = dataObject.result[value_name];
+                console.log(key + ":" + value);
+                if (dataKeys.indexOf(key) < 0) {
+                    datasets.push({
+                        label: key,
+                        backgroundColor: "#" + chartColors[index++],
+                        data: [dataObject.result[value_name]],
+                    });
+                    dataKeys.push(key)
+                } else {
+                    datasets.find(x => x.label === key).data.push(dataObject.result[key]);
+                }
+            });
+
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: datasets,
+                    labels: dataKeys
+                },
+                options: {
+                    legend: {
+                        display: false,
+                        position: "right",
+                    },
+                    responsive: true
+                }
+            };
+
+            return new Chart(ctx, config);
+        };
+
+        function makeTable(element, columns, data) {
+            var table_cols = [];
+            for (col_name in columns) {
+                table_cols.push(
+                    {
+                        field: "result." + columns[col_name],
+                        title: columns[col_name],
+                        squash: columns[col_name],
+                        //filterControl: columns[col_name]=="splunk_server"? "input": null,
+                        sortable: "true",
+                        formatter: columns[col_name] == "server_roles" ? serverRolesFormatter : null
+                    }
+                );
+            }
+
+            return $(element).bootstrapTable({
+                showFullscreen: true,
+                showExport: true,
+                exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
+                showExtendedPagination: true,
+                filterControl: false,
+                pagination: true,
+                buttonsToolbar: element.replace("_table", "_toolbar") + ".buttons-toolbar",
+                paginationVAlign: "bottom",
+                theadClasses: "thead-light",
+                showFooter: false,
+                sortable: true,
+                classes: "table table-bordered table-hover",
+                data: data,
+                columns: table_cols,
+            });
+        };
+
+        function makeTimeChart(element, data) {
+            var ctx = document.getElementById(element).getContext('2d');
+            var labels = [];
+            var datasets = [];
+            var index = 0;
+
+            for (key in data[0].result) {
+                if (key[0] != "_") {
+                    datasets.push({
+                        label: key,
+                        backgroundColor: "#" + chartColors[index],
+                        borderColor: "#" + chartColors[index],
+                        fill: false,
+                        data: [],
+                    });
+                    index++;
+                }
+            }
+
+            data.forEach(function (item) {
+                for (key in item.result) {
+                    if (key[0] != "_") {
+                        datasets.find(x => x.label === key).data.push(item.result[key]);
+                    } else if (key == "_time") {
+                        
+                        
+                        var options;
+                        if(!moment(item.result[key]).isValid()){
+                            // ugly hack for windows timezone formating of splunk json dates (should standardize timeformat on export)
+                            var timestring = item.result[key].substring(0,23);
+                            var timezone = item.result[key].substring(24);
+                            var short_timezone = tz_array.find(x => x.long === timezone);
+                            options =
+                                labels.push(new Date(timestring + " " + short_timezone.short).toLocaleString("en-us"));
+                        }else{
+                            options =
+                                labels.push(new Date(item.result[key]).toLocaleString("en-us"));
+                        }
+                    }
+                }
+            })
+            var config = {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: ''
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            distribution: 'series',
+                            offset: true,
+                            ticks: {
+                                major: {
+                                    enabled: true,
+                                    fontStyle: 'bold'
+                                },
+                                source: 'data',
+                                autoSkip: true,
+                                autoSkipPadding: 75,
+                                maxRotation: 0,
+                                sampleSize: 100
+                            },
+                            afterBuildTicks: function (scale, ticks) {
+                                var majorUnit = scale._majorUnit;
+                                var firstTick = ticks[0];
+                                var i, ilen, val, tick, currMajor, lastMajor;
+
+                                val = moment(ticks[0].value);
+                                if ((majorUnit === 'minute' && val.second() === 0)
+                                    || (majorUnit === 'hour' && val.minute() === 0)
+                                    || (majorUnit === 'day' && val.hour() === 9)
+                                    || (majorUnit === 'month' && val.date() <= 3 && val.isoWeekday() === 1)
+                                    || (majorUnit === 'year' && val.month() === 0)) {
+                                    firstTick.major = true;
+                                } else {
+                                    firstTick.major = false;
+                                }
+                                lastMajor = val.get(majorUnit);
+
+                                for (i = 1, ilen = ticks.length; i < ilen; i++) {
+                                    tick = ticks[i];
+                                    val = moment(tick.value);
+                                    currMajor = val.get(majorUnit);
+                                    tick.major = currMajor !== lastMajor;
+                                    lastMajor = currMajor;
+                                }
+                                return ticks;
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                        }]
+                    }
+                }
+            }
+
+            return new Chart(ctx, config);
+        };
+
+        function serverRolesFormatter(value, row, index) {
+            return [
+                value.join("</br>")
+            ].join('')
+        };
+
+        $(function () {
+            var server_server_cols = ["splunk_server", "product_type", "version", "server_roles", "os_name_extended", "os_version", "cpu_arch", "numberOfCores", "numberOfVirtualCores", "physicalMemoryMB", "fips_mode", "isForwarding", "isFree", "isTrial", "kvStoreStatus", "licenseState", "master_uri"];
+            makeTable('#splunk_servers_table', server_server_cols, splunk_servers);
+
+            var server_settings_cols = ["splunk_server", "SPLUNK_DB", "SPLUNK_HOME", "appServerPorts", "enableSplunkWebSSL", "httpport", "kvStoreDisabled", "kvStorePort", "mgmtHostPort", "minFreeSpace", "pass4SymmKey", "serverName", "sessionTimeout", "startwebserver", "trustedIP"];
+            makeTable('#splunk_server_settings_table', server_settings_cols, splunk_server_settings);
+
+            //var forwarder_overview_names = ["Instance", "Type", "Version", "OS", "Architecture", "Status", "Last Connected to Indexers", "Total KB", "Average KB/s", "Average Events/s"];
+            var forwarder_overview_cols = ["Instance", "Type", "Version", "OS", "Architecture", "Status", "Last Connected to Indexers", "Total KB"];
+            makeTable('#forwarder_overview_table', forwarder_overview_cols, forwarder_status);
+
+            var scheduler_summary_cols = ["Instance", "CPU Cores (Physical / Virtual)", "Concurrency of Historical Scheduled Report (Running/Limit)", "Concurrency of Real-time Scheduled Report (Running/Limit)", "Unique Scheduled Reports"]
+            makeTable('#scheduler_summary_table', scheduler_summary_cols, scheduler_summary);
+
+            var scheduler_summary_cols = ['value', 'totalCount']
+            makeTable('#sources_and_sourcetypes_table', scheduler_summary_cols, sources_and_sourcetypes);
+
+            var searches_by_duration_cols = ["splunk_server", "search_type", "savedsearch_name", "count", "user", "cron_schedule", "schedule_window", "allow_skew", "status", "app", "max_run_time", "average_run_time", "total_run_time"];
+            makeTable('#searches_by_duration_table', searches_by_duration_cols, searches_by_duration);
+
+            var scheduled_search_skipped_searches_cols = ["splunk_server", "savedsearch_name", "count", "user", "cron_schedule", "schedule_window", "allow_skew", "status", "app", "max_run_time", "average_run_time", "total_run_time"];
+            makeTable('#scheduled_search_skipped_searches_table', scheduled_search_skipped_searches_cols, scheduled_search_skipped_searches);
+
+            var searches_exceeding_frequency_cols = ["_time", "app", "alert_action", "splunk_server", "component", "user search_type", "savedsearch_name", "status", "scheduled_time", "run_time", "result_count", "event_message", "cron_schedule", "search"];
+            makeTable('#searches_exceeding_frequency_table', searches_exceeding_frequency_cols, searches_exceeding_frequency);
+
+            var active_users_cols = ["host", "Distinct Users", "users"];
+            makeTable('#active_users_table', active_users_cols, active_users);
+
+            var data_onboarding_issues_cols = ["problem", "count", "splunk_server"];
+            makeTable('#data_onboarding_issues_table', data_onboarding_issues_cols, data_onboarding_issues);
+
+            var indexes_with_time_skew_cols = ["splunk_server", "latest(host)", "sourcetype", "index", "diff"];
+            makeTable('#indexes_with_time_skew_table', indexes_with_time_skew_cols, indexes_with_time_skew);
+
+            var data_inputs_index_mapping_cols = ["splunk_server", "index", "disabled", "input_count", "input"];
+            makeTable('#data_inputs_index_mapping_table', data_inputs_index_mapping_cols, data_inputs_index_mapping);
+
+            var index_volume_summary_cols = ["splunk_server", "title", "max_size", "total_size", "volume_path"];
+            makeTable('#index_volume_summary_table', index_volume_summary_cols, index_volume_summary);
+
+            var indexes_summary_cols = ["splunk_server", "title", "app", "homePath", "homePath_expanded", "homePath.maxDataSizeMB", "coldPath", "coldPath_expanded", "coldPath.maxDataSizeMB", "disabled", "totalEventCount", "maxDataSize", "maxTotalDataSizeMB", "currentDBSizeMB", "frozenTimePeriodInSecs", "minTime", "maxTime", "rententionDays", "daysSinceEvent"];
+            makeTable('#indexes_summary_table', indexes_summary_cols, indexes_summary);
+
+            //var index_cluster_bucket_status_cols = ["splunk_server","title","is_searchable","failureCount","expectedBuckets *","site *"];
+            //makeTable('#index_cluster_bucket_status_table', index_cluster_bucket_status_cols, index_cluster_bucket_status);
+
+            var indexes_by_role_and_user_cols = ["splunk_server", "index_name", "Role", "values(User)"];
+            makeTable('#indexes_by_role_and_user_table', indexes_by_role_and_user_cols, indexes_by_role_and_user);
+
+            var role_capability_summary_cols = ["splunk_server", "title", "defaultApp", "capabilities", "imported_capabilities", "imported_roles", "srchDiskQuota", "srchFilter", "srchIndexesAllowed", "srchIndexesDefault", "srchJobsQuota", "srchTimeWin"];
+            makeTable('#role_capability_summary_table', role_capability_summary_cols, role_capability_summary);
+
+            var role_heirarchy_cols = ["splunk_server", "inherited_role", "roles", "capabilities", "defaultIndexes", "searchableIndexes"];
+            makeTable('#role_heirarchy_table', role_heirarchy_cols, role_heirarchy);
+
+            var apps_cols = ["splunk_server", "title", "label", "eai: acl.sharing", "version", "visible"];
+            makeTable('#apps_table', apps_cols, apps);
+
+            var schedule_search_summary_cols = ["splunk_server", "app", "savedsearch_name", "cron_schedule", "schedule_window", "next_scheduled_time", "search"];
+            makeTable('#schedule_search_summary_table', schedule_search_summary_cols, schedule_search_summary);
+
+            var data_model_summary_cols = ["splunk_server", "app", "datamodel", "cron_schedule", "allow_skew", "max_time", "max_concurrent"];
+            makeTable('#data_model_summary_table', data_model_summary_cols, data_model_summary);
+
+            var search_best_practices_index_and_sourcetype_cols = ["app", "index and sourcetype", "index only", "neither", "sourcetype only"];
+            makeTable('#search_best_practices_index_and_sourcetype_table', search_best_practices_index_and_sourcetype_cols, search_best_practices_index_and_sourcetype);
+
+            var scheduled_searches_high_concurrency_by_minute_cols = ["splunk_server", "schedule_window", "overlap_minute", "scheduled_search_count", "scheduled_search", "max_hist_scheduled_searches"];
+            makeTable('#scheduled_searches_high_concurrency_by_minute_table', scheduled_searches_high_concurrency_by_minute_cols, scheduled_searches_high_concurrency_by_minute);
+
+            var datamodel_incomplete_datamodels_cols = ["splunk_server", "app", "datamodels", "datamodel_count"];
+            makeTable('#datamodel_incomplete_datamodels_table', datamodel_incomplete_datamodels_cols, datamodel_incomplete_datamodels);
+
+            var private_accelerated_reports_cols = ["eai:acl.app", "eai:acl.owner", "title", "auto_summarize", "auto_summarize.cron_schedule", "auto_summarize.dispatch.earliest_time", "auto_summarize.dispatch.latest_time", "auto_summarize", "search"];
+            makeTable('#private_accelerated_reports_table', private_accelerated_reports_cols, private_accelerated_reports);
+
+        });
+
+        window.onload = function () {
+            makeTimeChart('license_usage_chart', license_usage_by_sourcetype);
+            makeTimeChart('memory_usage_chart', memory_usage_overview);
+            makeTimeChart('cpu_usage_overview_chart', cpu_usage_overview);
+            makeTimeChart('search_volume_chart', search_volume);
+            makeTimeChart('adhoc_searches_chart', adhoc_searches);
+            //makeTimeChart('execution_latency_overview_chart',execution_latency_overview);
+
+
+            //makePieChart('sources_and_sourcetypes_chart',sources_and_sourcetypes,'value','totalCount');
+        };
+    </script>
+
+
+</body>
+
+</html>
