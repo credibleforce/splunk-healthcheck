@@ -2,4 +2,4 @@
 
 VERSION=$(cat version.txt)
 
-zip -r dist/engagement_report.$VERSION.zip splunk_engagement_export
+zip -r dist/engagement_export.$VERSION.zip splunk_engagement_export
