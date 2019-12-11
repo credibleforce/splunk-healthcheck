@@ -18,105 +18,6 @@
   </fieldset>
   <row>
     <panel>
-      <title>Splunk Server Settings</title>
-      <table>
-        <search>
-          <query>index=healthcheck source="$reportdirectory$/splunk_server_settings.json"
-| table result.*
-| rename result.* AS *
-| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
-|  table splunk_server, SPLUNK_DB, SPLUNK_HOME, appServerPorts, enableSplunkWebSSL, httpport, kvStoreDisabled, kvStorePort, mgmtHostPort, minFreeSpace, pass4SymmKey, serverName, sessionTimeout, startwebserver, trustedIP 
-|  fields - pass4SymmKey</query>
-          <earliest>0</earliest>
-          <latest></latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">5</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Splunk Servers Overview</title>
-      <table>
-        <search>
-          <query>index=healthcheck source="$reportdirectory$/splunk_servers.json"
-| table result.*
-| rename result.* AS *
-| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
-| eval server_roles=if(mvcount('server_roles{}')&gt;0,'server_roles{}',server_roles) 
-| table splunk_server, product_type, version, server_roles, os_name_extended, os_version, cpu_arch, numberOfCores, numberOfVirtualCores, physicalMemoryMB, fips_mode, isForwarding, isFree, isTrial, kvStoreStatus, licenseState, master_uri,</query>
-          <earliest>0</earliest>
-          <latest></latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">5</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Forwarder Overview</title>
-      <table>
-        <search>
-          <query>index=healthcheck source="$reportdirectory$/forwarder_status.json"   
-| table result.*
-| rename result.* AS * 
-| rename "Average KB/s Over Time{}" AS "Average KB/s Over Time"
-| table Instance, Type, Version, OS, Architecture, Status, "Last Connected to Indexers", "Total KB", "Average KB/s Over Time", "Average KB/s", "Average Events/s"</query>
-          <earliest>0</earliest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">5</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Scheduler Summary</title>
-      <table>
-        <search>
-          <query>index=healthcheck source="$reportdirectory$/scheduler_summary.json"            
-| table result.*
-| rename result.* AS *
-| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
-| eval scheduled_search=if(mvcount('scheduled_search{}')&gt;0,'scheduled_search{}',scheduled_search)
-| table Instance, "CPU Cores (Physical / Virtual)", "Concurrency of Historical Scheduled Report (Running/Limit)", "Concurrency of Real-time Scheduled Report (Running/Limit)", "Unique Scheduled Reports"</query>
-          <earliest>0</earliest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">20</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
       <title>License Usage Overview</title>
       <chart>
         <search>
@@ -166,22 +67,48 @@
       </chart>
     </panel>
     <panel>
-      <title>Event Volume by Sourcetype</title>
+      <title>Search Volume Overview</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/sources_and_sourcetypes.json"    
+          <query>index=healthcheck source="$reportdirectory$/search_volume.json"          
 | table result.*
-| rename result.* AS * 
-| table value, type, totalCount, firstTime, lastTime, recentTime
-| chart sum(totalCount) AS totalCount by value</query>
+| rename result.* AS *
+| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
+| stats sum(*) AS * by _time</query>
           <earliest>0</earliest>
-          <latest></latest>
           <sampleRatio>1</sampleRatio>
         </search>
-        <option name="charting.chart">pie</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
       </chart>
     </panel>
   </row>
@@ -280,50 +207,148 @@
   </row>
   <row>
     <panel>
-      <title>Search Volume Overview</title>
-      <chart>
+      <title>License Overview</title>
+      <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/search_volume.json"          
+          <query>index="healthcheck" source="$reportdirectory$/license_summary.json" 
+| rename result.* AS * 
+| table splunk_server, type, sourcetypes, license, status, expiration_time, quotaGB</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Splunk Servers Overview</title>
+      <table>
+        <search>
+          <query>index=healthcheck source="$reportdirectory$/splunk_servers.json"
 | table result.*
 | rename result.* AS *
-| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
-| stats sum(*) AS * by _time</query>
+| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
+| eval server_roles=if(mvcount('server_roles{}')&gt;0,'server_roles{}',server_roles) 
+| table splunk_server, product_type, version, server_roles, os_name_extended, os_version, cpu_arch, numberOfCores, numberOfVirtualCores, physicalMemoryMB, fips_mode, isForwarding, isFree, isTrial, kvStoreStatus, licenseState, master_uri,</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Splunk Server Settings</title>
+      <table>
+        <search>
+          <query>index=healthcheck source="$reportdirectory$/splunk_server_settings.json"
+| table result.*
+| rename result.* AS *
+| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
+|  table splunk_server, SPLUNK_DB, SPLUNK_HOME, appServerPorts, enableSplunkWebSSL, httpport, kvStoreDisabled, kvStorePort, mgmtHostPort, minFreeSpace, pass4SymmKey, serverName, sessionTimeout, startwebserver, trustedIP 
+|  fields - pass4SymmKey</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Search Peer Settings</title>
+      <table>
+        <search>
+          <query>index="healthcheck" source="$reportdirectory$/search_peer_summary.json"
+| rename result.* AS *
+| table splunk_server, cluster_label, guid, title, host, host_fqdn, status. version, os_name, isForwarding, is_https, peerName, peerType, replicationStatus, rtsearch_enabled, search_groups, searchable_indexes</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Deployment Client Settings</title>
+      <table>
+        <search>
+          <query>index="healthcheck" source="$reportdirectory$/deployment_client_summary.json" 
+| rename result.* AS *
+| eval serverClasses=if(mvcount('serverClasses{}')&gt;0,'serverClasses{}',serverClasses) 
+| eval clientName=if(mvcount('clientName{}')&gt;0,'clientName{}',clientName) 
+| table splunk_server, serverClasses, targetUri, clientName</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Active Users Overview</title>
+      <table>
+        <search>
+          <query>index=healthcheck source="$reportdirectory$/active_users.json" 
+| table result.*
+| rename result.* AS *, host AS splunk_server
+| eval users=if(mvcount('users{}')&gt;0,'users{}',users)
+| table splunk_server, "Distinct Users", users</query>
           <earliest>0</earliest>
           <sampleRatio>1</sampleRatio>
         </search>
-        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisX.abbreviation">none</option>
-        <option name="charting.axisX.scale">linear</option>
-        <option name="charting.axisY.abbreviation">none</option>
-        <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
-        <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">line</option>
-        <option name="charting.chart.bubbleMaximumSize">50</option>
-        <option name="charting.chart.bubbleMinimumSize">10</option>
-        <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
-        <option name="charting.chart.showDataLabels">none</option>
-        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.stackMode">default</option>
-        <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">none</option>
-        <option name="charting.layout.splitSeries">0</option>
-        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
-        <option name="charting.legend.mode">standard</option>
-        <option name="charting.legend.placement">right</option>
-        <option name="charting.lineWidth">2</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-      </chart>
+        <option name="count">1</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
     </panel>
+  </row>
+  <row>
     <panel>
       <title>Ad-hoc Searches Overview</title>
       <chart>
@@ -373,6 +398,94 @@
     </panel>
   </row>
   <row>
+    <panel>
+      <title>Deployment Clients</title>
+      <table>
+        <search>
+          <query>index="healthcheck" source="$reportdirectory$/deployment_clients_summary.json" 
+| rename result.* AS *
+| table splunk_server, clientName, ip, dns, hostname, package, splunkVersion, utsname</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Forwarder Overview</title>
+      <table>
+        <search>
+          <query>index=healthcheck source="$reportdirectory$/forwarder_status.json"   
+| table result.*
+| rename result.* AS * 
+| rename "Average KB/s Over Time{}" AS "Average KB/s Over Time"
+| table Instance, Type, Version, OS, Architecture, Status, "Last Connected to Indexers", "Total KB", "Average KB/s Over Time", "Average KB/s", "Average Events/s"</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Scheduler Overview</title>
+      <table>
+        <search>
+          <query>index=healthcheck source="$reportdirectory$/scheduler_summary.json"            
+| table result.*
+| rename result.* AS *
+| eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
+| eval scheduled_search=if(mvcount('scheduled_search{}')&gt;0,'scheduled_search{}',scheduled_search)
+| table Instance, "CPU Cores (Physical / Virtual)", "Concurrency of Historical Scheduled Report (Running/Limit)", "Concurrency of Real-time Scheduled Report (Running/Limit)", "Unique Scheduled Reports"</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Event Volume by Sourcetype</title>
+      <chart>
+        <search>
+          <query>index=healthcheck source="$reportdirectory$/sources_and_sourcetypes.json"    
+| table result.*
+| rename result.* AS * 
+| table value, type, totalCount, firstTime, lastTime, recentTime
+| chart sum(totalCount) AS totalCount by value</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
     <panel>
       <title>Heavy Forwarder Average KB/s</title>
       <chart>
@@ -568,29 +681,6 @@
   </row>
   <row>
     <panel>
-      <title>Active Users Overview</title>
-      <table>
-        <search>
-          <query>index=healthcheck source="$reportdirectory$/active_users.json" 
-| table result.*
-| rename result.* AS *, host AS splunk_server
-| eval users=if(mvcount('users{}')&gt;0,'users{}',users)
-| table splunk_server, "Distinct Users", users</query>
-          <earliest>0</earliest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">1</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
       <title>Data Onboarding Issues</title>
       <table>
         <search>
@@ -604,6 +694,27 @@
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Cluster Settings Overview</title>
+      <table>
+        <search>
+          <query>index="healthcheck" source="$reportdirectory$/cluster_settings_summary.json"  
+| rename result.* AS *
+|  table splunk_server, cluster_label, mode, forwarderdata_rcv_port, forwarderdata_use_ssl, guid, manual_detention, multisite, site, site_replication_factor, site_search_factor, search_factor, replication_factor, replication_port, replication_use_ssl, rolling_restart, summary_replication</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
@@ -690,7 +801,7 @@
       <title>Index Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="/var/engagement_data/ccs_data/utf8/indexes_summary.json" 
+          <query>index=healthcheck source="$reportdirectory$/indexes_summary.json" 
 | table result.*
 | rename result.* AS * | table splunk_server, title, app, homePath, homePath_expanded, homePath.maxDataSizeMB, coldPath, coldPath_expanded, coldPath.maxDataSizeMB, disabled, totalEventCount, maxDataSize, maxTotalDataSizeMB, currentDBSizeMB, frozenTimePeriodInSecs,minTime, maxTime, rententionDays, daysSinceEvent</query>
           <earliest>0</earliest>
