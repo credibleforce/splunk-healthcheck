@@ -26,7 +26,7 @@ print("Customer: {0}".format(customer_name))
 print("Import Data Path: {0}".format(import_data_path))
 
 engagement_data_name = "{0}_engagement_data.js".format(re.sub(r"[^\w\s]", '', re.sub(r"\s+", '-', customer_name.lower())))
-engagment_data_path = os.path.join(script_dir,"build",engagement_data_name)
+engagment_data_path = os.path.join(script_dir,"dist",engagement_data_name)
 
 embed_data = True
 
@@ -56,7 +56,7 @@ table = f.read()
 
 # build index and js data files
 f_data = open(engagment_data_path, 'w+')
-f_index= open(os.path.join(script_dir,"build","index.html"),'w+')
+f_index= open(os.path.join(script_dir,"dist","index.html"),'w+')
 
 for r in reports:
     r_data = []
