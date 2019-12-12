@@ -2,7 +2,7 @@
 
 A set of tools for information gathering and summarziation of Splunk installations. Ideally these tools are used on a Distributed Monitoring Console for best results.
 
-## Export Usage
+## Exporting Data
 
 1. Download the latest [Splunk Engagement Healthcheck App](
 https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/latest/download/engagement_healthcheck_0.2.0.tgz)
