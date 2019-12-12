@@ -2,3 +2,4 @@
 dist/
 **/engagement_data/*.json
 output/
+*.code-workspace

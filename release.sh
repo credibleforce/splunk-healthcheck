@@ -21,11 +21,11 @@ then
 	exit
 fi
 
-GITHUB_TOKEN=$1
+export GITHUB_TOKEN=$1
 VERSION=$2
 
 githubrelease release scalatar/splunk-engagement-healthcheck create $VERSION --prerelease
-githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION splunk_app/dist/*
-githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION report_builder/dist/*
-githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION engagement_export/dist/*
+githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION splunk_app/dist/*.tgz
+githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION report_builder/dist/*.tgz
+githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION engagement_export/dist/*.zip
 githubrelease release scalatar/splunk-engagement-healthcheck publish $VERSION
