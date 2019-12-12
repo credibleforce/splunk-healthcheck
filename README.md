@@ -1,3 +1,3 @@
 # splunk-engagement-healthcheck
 
-Engagement report gather tools.
+Engagement report gathering tools.
