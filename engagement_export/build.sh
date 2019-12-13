@@ -6,4 +6,5 @@ cd $DIR
 VERSION=$(cat splunk_engagement_export/version.txt)
 
 rm -f dist/engagement_export.zip
+rm -f splunk_engagement_export/engagement_data/*
 zip -r dist/engagement_export.zip splunk_engagement_export

@@ -6,4 +6,5 @@ cd $DIR
 VERSION=$(cat report_builder/version.txt)
 
 rm -f dist/report_builder.tgz
+rm -f report_builder/output/*
 tar -zcvf dist/report_builder.tgz report_builder
