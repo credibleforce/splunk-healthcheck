@@ -1,5 +1,9 @@
 #!/bin/bash
 
-VERSION=$(cat version.txt)
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $DIR
 
-tar -zcvf dist/report_builder.$VERSION.tgz report_builder.py engagement_data templates
+VERSION=$(cat report_builder/version.txt)
+
+rm -f dist/report_builder.tgz
+tar -zcvf dist/report_builder.tgz report_builder

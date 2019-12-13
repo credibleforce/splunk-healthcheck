@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os, sys, io
 import argparse
 import glob
@@ -10,10 +10,11 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 
 # get args
 parser = argparse.ArgumentParser(description="Create Engagment Report", add_help=True)
-parser.add_argument("-c", "--customer", type=str, help="Customer name", default="Customer")
-parser.add_argument("-d", "--data", type=str, help="Import data directory",
-                    default=os.path.join(script_dir, "engagement_data"))
-parser.add_argument("-b", "--bundle", help="Bundle the data objects into the HTML page", action='store_true', default=False)
+parser.add_argument("-c", "--customer", type=str, help="Customer name", required=True)
+parser.add_argument("-d", "--data", type=str,
+                    help="Import data directory", required=True)
+parser.add_argument("-b", "--bundle", help="Bundle the data objects into the HTML page",
+                    action='store_true', default=False, required=False)
 args = parser.parse_args()
 
 # set customer and data path
@@ -23,10 +24,12 @@ import_data_path = os.path.abspath(args.data)
 print("Customer: {0}".format(customer_name))
 print("Import Data Path: {0}".format(import_data_path))
 
+# check for required output directory
+if not os.path.exists(os.path.join(script_dir, "output")):
+    os.mkdir(os.path.join(script_dir, "output"))
+
 engagement_data_name = "{0}_engagement_data.js".format(re.sub(r"[^\w\s]", '', re.sub(r"\s+", '-', customer_name.lower())))
 engagment_data_path = os.path.join(script_dir,"output",engagement_data_name)
-
-embed_data = True
 
 # build a list of all report names
 reports = []

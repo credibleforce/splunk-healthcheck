@@ -1,5 +1,5 @@
 .DS_Store
 dist/
 **/engagement_data/*.json
-output/
+**/**/output/*
 *.code-workspace
