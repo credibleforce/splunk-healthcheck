@@ -62,12 +62,23 @@ f_index = open(os.path.join(script_dir, "output", "index.html"), 'w+')
 for r in reports:
     r_data = []
     print(os.path.join(import_data_path, "{0}.json".format(r)))
-    with io.open(os.path.join(import_data_path, "{0}.json".format(r)), 'r') as f:
-        for line in f:
-            try:
-                r_data.append(json.loads(line.encode('ascii', 'ignore')))
-            except:
-                continue
+    try:
+        with io.open(os.path.join(import_data_path, "{0}.json".format(r)), 'r', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    # force utf-8 formatting
+                    r_data.append(json.loads(line.encode('utf-8', 'ignore')))
+                except:
+                    continue
+    except UnicodeDecodeError:
+        print('got unicode error with \'utf-8\', trying different encoding \'utf-16-le\'')
+        with io.open(os.path.join(import_data_path, "{0}.json".format(r)), 'r', encoding='utf-16-le') as f:
+            for line in f:
+                try:
+                    # force utf-8 formatting
+                    r_data.append(json.loads(line.encode('utf-8', 'ignore')))
+                except:
+                    continue
 
     # engagmenet data dynamic
     r_report_data = report_data

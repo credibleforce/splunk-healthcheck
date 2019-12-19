@@ -1,5 +1,5 @@
 <form>
-  <label>Deployment</label>
+  <label>Deployment Overview</label>
   <fieldset submitButton="false">
     <input searchWhenChanged="true" token="timefield" type="time">
       <label></label>
@@ -428,9 +428,47 @@
   </row>
   <row>
     <panel>
-      <title>Cluster Settings Overview</title>
+      <title>Index Cluster Settings Overview</title>
       <table>
         <search ref="cluster_settings_summary">
+          <earliest>$timefield.earliest$</earliest>
+          <latest>$timefield.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Search Head Cluster Settings Overview</title>
+      <table>
+        <search ref="searchhead_cluster_summary">
+          <earliest>$timefield.earliest$</earliest>
+          <latest>$timefield.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Search Head Cluster Captaincy Change</title>
+      <table>
+        <search ref="searchhead_cluster_captain_change">
           <earliest>$timefield.earliest$</earliest>
           <latest>$timefield.latest$</latest>
           <sampleRatio>1</sampleRatio>

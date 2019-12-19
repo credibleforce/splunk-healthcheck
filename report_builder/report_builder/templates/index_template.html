@@ -108,7 +108,9 @@
                             <li class="nav-item"><a href="#search_peer_summary_table">Search Peer Settings</a></li>
                             <li class="nav-item"><a href="#deployment_client_summary_table">Deployment Client Settings</a></li>
                             <li class="nav-item"><a href="#deployment_clients_summary_table">Deployment Clients</a></li>
-                            <li class="nav-item"><a href="#cluster_settings_summary_table">Cluster Settings</a></li>
+                            <li class="nav-item"><a href="#cluster_settings_summary_table">Index Cluster Settings</a></li>
+                            <li class="nav-item"><a href="#searchhead_cluster_summary_table">Search Head Cluster Settings</a></li>
+                            <li class="nav-item"><a href="#searchhead_cluster_captain_change_table">Search Head Cluster Captaincy Change</a></li>
                             <!--<li class="nav-item" i><a href="#index_cluster_bucket_status">Index Cluster Bucket Summary</a></li>-->
                             <li class="nav-item" i><a href="#indexes_by_role_and_user">Index and Role Overview</a></li>
                             <li class="nav-item" i><a href="#role_capability_summary">Role Summary</a></li>
@@ -571,7 +573,7 @@
                         <table id="cluster_settings_summary_table" class="data-table">
                             <caption>
                                 <nav id="cluster_settings_summary" class="navbar navbar-expand-lg navbar-light bg-light">
-                                    <a class="navbar-brand" href="#cluster_settings_summary">Cluster Settings</a>
+                                    <a class="navbar-brand" href="#cluster_settings_summary">Index Cluster Settings</a>
                                     <span class="navbar-text">
                                         <div id="cluster_settings_summary_toolbar" class="buttons-toolbar"></div>
                                     </span>
@@ -581,7 +583,46 @@
                     </div>
                     <div class="col col-lg-2">&nbsp;</div>
                 </div>
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="searchhead_cluster_summary_table" class="data-table">
+                            <caption>
+                                <nav id="searchhead_cluster_summary" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#searchhead_cluster_summary">Search Head Cluster Settings</a>
+                                    <span class="navbar-text">
+                                        <div id="searchhead_cluster_summary_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
 
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-auto" style="width:100%">
+                
+                        <table id="searchhead_cluster_captain_change_table" class="data-table">
+                            <caption>
+                                <nav id="searchhead_cluster_captain_change" class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <a class="navbar-brand" href="#searchhead_cluster_captain_change">Search Head Cluster Captaincy Change</a>
+                                    <span class="navbar-text">
+                                        <div id="searchhead_cluster_captain_change_toolbar" class="buttons-toolbar"></div>
+                                    </span>
+                                </nav>
+                            </caption>
+                        </table>
+                    </div>
+                    <div class="col col-lg-2">&nbsp;</div>
+                </div>
+                
                 <!--<div class="row justify-content-md-center">
 					<div class="col col-lg-2">
 						&nbsp;
@@ -1279,6 +1320,12 @@
             var cluster_settings_summary_cols = ["splunk_server", "cluster_label", "mode", "forwarderdata_rcv_port", "forwarderdata_use_ssl", "guid", "manual_detention", "multisite", "site", "site_replication_factor", "site_search_factor", "search_factor", "replication_factor", "replication_port", "replication_use_ssl", "rolling_restart","summary_replication"];
             makeTable('#cluster_settings_summary_table', cluster_settings_summary_cols, cluster_settings_summary); 
 
+            var searchhead_cluster_summary_cols = ["splunk_server", "splunk_server_group", "guid", "site", "status", "is_captain", "preferred_captain", "adhoc_searchhead", "replication_port", "replication_use_ssl", "advertise_restart_required", "", "last_heartbeat", "pending_job_count"];
+            makeTable('#searchhead_cluster_summary_table', searchhead_cluster_summary_cols, searchhead_cluster_summary); 
+
+            var searchhead_cluster_captain_change_cols = ["Time", "splunk_server", "Event"];
+            makeTable('#searchhead_cluster_captain_change_table', searchhead_cluster_captain_change_cols, searchhead_cluster_captain_change); 
+
             //var index_cluster_bucket_status_cols = ["splunk_server","title","is_searchable","failureCount","expectedBuckets *","site *"];
             //makeTable('#index_cluster_bucket_status_table', index_cluster_bucket_status_cols, index_cluster_bucket_status);
 
@@ -1291,7 +1338,7 @@
             var role_heirarchy_cols = ["splunk_server", "inherited_role", "roles", "capabilities", "defaultIndexes", "searchableIndexes"];
             makeTable('#role_heirarchy_table', role_heirarchy_cols, role_heirarchy);
 
-            var apps_cols = ["splunk_server", "title", "label", "eai: acl.sharing", "version", "visible"];
+            var apps_cols = ["splunk_server", "title", "label", "eai:acl.sharing", "version", "visible", "appurl", "checksum", "checksum_type", "homepage"];
             makeTable('#apps_table', apps_cols, apps);
 
             var schedule_search_summary_cols = ["splunk_server", "app", "savedsearch_name", "cron_schedule", "schedule_window", "next_scheduled_time", "search"];

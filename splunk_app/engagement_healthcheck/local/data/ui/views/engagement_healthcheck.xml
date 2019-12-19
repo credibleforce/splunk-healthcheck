@@ -6,7 +6,7 @@
       <fieldForLabel>reportdirectory</fieldForLabel>
       <fieldForValue>reportdirectory</fieldForValue>
       <search>
-        <query>index=healthcheck 
+        <query>`engagement_healthcheck_index` 
 | stats count by source 
 | rex field=source "(?&lt;reportdirectory&gt;.*)?\/[^\/]+$" 
 | fields reportdirectory 
@@ -21,7 +21,7 @@
       <title>License Usage Overview</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/license_usage_by_sourcetype.json"        
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/license_usage_by_sourcetype.json"        
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -70,7 +70,7 @@
       <title>Search Volume Overview</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/search_volume.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/search_volume.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -117,7 +117,7 @@
       <title>CPU Usage Overview</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/cpu_usage_overview.json"       
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/cpu_usage_overview.json"       
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -162,7 +162,7 @@
       <title>Memory Usage Overview</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/memory_usage_overview.json"         
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/memory_usage_overview.json"         
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -210,7 +210,7 @@
       <title>License Overview</title>
       <table>
         <search>
-          <query>index="healthcheck" source="$reportdirectory$/license_summary.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/license_summary.json" 
 | rename result.* AS * 
 | table splunk_server, type, sourcetypes, license, status, expiration_time, quotaGB</query>
           <earliest>-24h@h</earliest>
@@ -232,7 +232,7 @@
       <title>Splunk Servers Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/splunk_servers.json"
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/splunk_servers.json"
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -258,7 +258,7 @@
       <title>Splunk Server Settings</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/splunk_server_settings.json"
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/splunk_server_settings.json"
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -284,7 +284,7 @@
       <title>Search Peer Settings</title>
       <table>
         <search>
-          <query>index="healthcheck" source="$reportdirectory$/search_peer_summary.json"
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/search_peer_summary.json"
 | rename result.* AS *
 | table splunk_server, cluster_label, guid, title, host, host_fqdn, status. version, os_name, isForwarding, is_https, peerName, peerType, replicationStatus, rtsearch_enabled, search_groups, searchable_indexes</query>
           <earliest>-24h@h</earliest>
@@ -306,7 +306,7 @@
       <title>Deployment Client Settings</title>
       <table>
         <search>
-          <query>index="healthcheck" source="$reportdirectory$/deployment_client_summary.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/deployment_client_summary.json" 
 | rename result.* AS *
 | eval serverClasses=if(mvcount('serverClasses{}')&gt;0,'serverClasses{}',serverClasses) 
 | eval clientName=if(mvcount('clientName{}')&gt;0,'clientName{}',clientName) 
@@ -330,7 +330,7 @@
       <title>Deployment Clients</title>
       <table>
         <search>
-          <query>index="healthcheck" source="$reportdirectory$/deployment_clients_summary.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/deployment_clients_summary.json" 
 | rename result.* AS *
 | table splunk_server, clientName, ip, dns, hostname, package, splunkVersion, utsname</query>
           <earliest>-24h@h</earliest>
@@ -352,7 +352,7 @@
       <title>Active Users Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/active_users.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/active_users.json" 
 | table result.*
 | rename result.* AS *, host AS splunk_server
 | eval users=if(mvcount('users{}')&gt;0,'users{}',users)
@@ -375,7 +375,7 @@
       <title>Ad-hoc Searches Overview</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/adhoc_searches.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/adhoc_searches.json" 
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -424,7 +424,7 @@
       <title>Forwarder Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/forwarder_status.json"   
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/forwarder_status.json"   
 | table result.*
 | rename result.* AS * 
 | rename "Average KB/s Over Time{}" AS "Average KB/s Over Time"
@@ -447,7 +447,7 @@
       <title>Scheduler Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/scheduler_summary.json"            
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/scheduler_summary.json"            
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -471,7 +471,7 @@
       <title>Event Volume by Sourcetype</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/sources_and_sourcetypes.json"    
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/sources_and_sourcetypes.json"    
 | table result.*
 | rename result.* AS * 
 | table value, type, totalCount, firstTime, lastTime, recentTime
@@ -490,7 +490,7 @@
       <title>Heavy Forwarder Average KB/s</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/heavy_forwarder_volume.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/heavy_forwarder_volume.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -540,7 +540,7 @@
       <title>Execution Latency Overview (&gt;5s)</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/execution_latency_overview.json"       
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/execution_latency_overview.json"       
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -562,7 +562,7 @@
       <title>Searches by Max Duration</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/searches_by_duration.json"  
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/searches_by_duration.json"  
 | table result.*
 | rename result.* AS * 
 | table splunk_server,search_type, savedsearch_name, count, user, cron_schedule, schedule_window, allow_skew, status, app, max_run_time, average_run_time,total_run_time 
@@ -589,7 +589,7 @@
       <title>Skipped Scheduled Searches</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/scheduled_search_skipped_searches.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/scheduled_search_skipped_searches.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -613,7 +613,7 @@
       <title>Schedule Search Concurrency (% of max)</title>
       <chart>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/scheduled_search_concurrency_as_percentage_of_max.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/scheduled_search_concurrency_as_percentage_of_max.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -660,7 +660,7 @@
       <title>Searches Exceeding Frequency</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/searches_exceeding_frequency.json"             
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/searches_exceeding_frequency.json"             
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -684,7 +684,7 @@
       <title>Data Onboarding Issues</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/data_onboarding_issues.json"            
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/data_onboarding_issues.json"            
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -705,12 +705,54 @@
   </row>
   <row>
     <panel>
-      <title>Cluster Settings Overview</title>
+      <title>Index Cluster Settings Overview</title>
       <table>
         <search>
-          <query>index="healthcheck" source="$reportdirectory$/cluster_settings_summary.json"  
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/cluster_settings_summary.json"  
 | rename result.* AS *
 |  table splunk_server, cluster_label, mode, forwarderdata_rcv_port, forwarderdata_use_ssl, guid, manual_detention, multisite, site, site_replication_factor, site_search_factor, search_factor, replication_factor, replication_port, replication_use_ssl, rolling_restart, summary_replication</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Search Head Cluster Settings Overview</title>
+      <table>
+        <search>
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/searchhead_cluster_summary.json"  
+| rename result.* AS *
+|  table splunk_server, splunk_server_group, guid, site, status, is_captain, preferred_captain, adhoc_searchhead, replication_port, replication_use_ssl, advertise_restart_required, , last_heartbeat, pending_job_count</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Search Head Cluster Captaincy Change</title>
+      <table>
+        <search>
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/searchhead_cluster_captain_change.json"  
+| rename result.* AS *
+|  table Time, splunk_server, Event</query>
           <earliest>0</earliest>
           <sampleRatio>1</sampleRatio>
         </search>
@@ -729,7 +771,7 @@
       <title>Indexes with Timeskew</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/indexes_with_time_skew.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/indexes_with_time_skew.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -752,7 +794,7 @@
       <title>Data Inputs Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/data_inputs_index_mapping.json"       
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/data_inputs_index_mapping.json"       
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -778,7 +820,7 @@
       <title>Index Volume Settings Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/index_volume_summary.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/index_volume_summary.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -801,7 +843,7 @@
       <title>Index Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="/var/engagement_data/ccs_data/utf8/indexes_summary.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="/var/engagement_data/ccs_data/utf8/indexes_summary.json" 
 | table result.*
 | rename result.* AS * | table splunk_server, title, app, homePath, homePath_expanded, homePath.maxDataSizeMB, coldPath, coldPath_expanded, coldPath.maxDataSizeMB, disabled, totalEventCount, maxDataSize, maxTotalDataSizeMB, currentDBSizeMB, frozenTimePeriodInSecs,minTime, maxTime, rententionDays, daysSinceEvent</query>
           <earliest>0</earliest>
@@ -824,7 +866,7 @@
       <title>Index Cluster Bucket Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/index_cluster_bucket_status.json"     
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/index_cluster_bucket_status.json"     
 | table result.*
 | rename result.* AS *
 | table splunk_server, title, is_searchable, failureCount, expectedBuckets*, site*</query>
@@ -846,7 +888,7 @@
       <title>Indexes by Role</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/indexes_by_role_and_user.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/indexes_by_role_and_user.json" 
 | table result.*
 | rename result.* AS * 
 | eval Users=if(mvcount('values(User){}')&gt;0,'values(User){}','values(User)') 
@@ -869,7 +911,7 @@
       <title>Role Capability Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/role_capability_summary.json"    
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/role_capability_summary.json"    
 | table result.*
 | rename result.* AS * 
 | eval capabilities=if(mvcount('capabilities{}')&gt;0,'capabilities{}','capabilities'), imported_capabilities=if(mvcount('imported_capabilities{}')&gt;0,'imported_capabilities{}','imported_capabilities'), imported_roles=if(mvcount('imported_roles{}')&gt;0,'imported_roles{}','imported_roles')
@@ -892,7 +934,7 @@
       <title>Inherited Roles and Capabilities</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/role_heirarchy.json"      
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/role_heirarchy.json"      
 | table result.*
 | rename result.* AS *
 | table splunk_server, inherited_role, roles, capabilities, defaultIndexes, searchableIndexes</query>
@@ -914,9 +956,9 @@
       <title>Apps Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/apps.json" 
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/apps.json" 
 | table result.*
-| rename result.* AS * | table splunk_server, title, label, eai:acl.sharing, version, visible</query>
+| rename result.* AS * | table splunk_server, title, label, eai:acl.sharing, version, visible, appurl, checksum, checksum_type, homepage</query>
           <earliest>0</earliest>
           <sampleRatio>1</sampleRatio>
         </search>
@@ -935,7 +977,7 @@
       <title>Scheduled Search Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/schedule_search_summary.json"   
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/schedule_search_summary.json"   
 | table result.*
 | rename result.* AS * 
 | table splunk_server, app, savedsearch_name, cron_schedule, schedule_window, next_scheduled_time, search</query>
@@ -957,7 +999,7 @@
       <title>Data Model Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/data_model_summary.json"     
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/data_model_summary.json"     
 | table result.*
 | rename result.* AS * 
 | table splunk_server, app, datamodel, cron_schedule, allow_skew, max_time, max_concurrent</query>
@@ -979,7 +1021,7 @@
       <title>Savedsearch Best Practices</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/search_best_practices_index_and_sourcetype.json"          
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/search_best_practices_index_and_sourcetype.json"          
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z") 
@@ -1003,7 +1045,7 @@
       <title>Scheduled Searches with High Concurrency by Minute</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/scheduled_searches_high_concurrency_by_minute.json"            
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/scheduled_searches_high_concurrency_by_minute.json"            
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -1027,7 +1069,7 @@
       <title>Incomplete Datamodels</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/datamodel_incomplete_datamodels.json"            
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/datamodel_incomplete_datamodels.json"            
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
@@ -1051,7 +1093,7 @@
       <title>Private Accelerated Reports Overview</title>
       <table>
         <search>
-          <query>index=healthcheck source="$reportdirectory$/private_accelerated_reports.json"              
+          <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/private_accelerated_reports.json"              
 | table result.*
 | rename result.* AS *
 | eval _time=strptime(_time,"%F %H:%M:%S.%f %Z")
