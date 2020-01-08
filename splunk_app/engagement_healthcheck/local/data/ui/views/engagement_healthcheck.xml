@@ -291,7 +291,7 @@
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
-        <option name="count">5</option>
+        <option name="count">1</option>
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
@@ -731,7 +731,7 @@
         <search>
           <query>`engagement_healthcheck_index` sourcetype=engagement_healthcheck* source="$reportdirectory$/searchhead_cluster_summary.json"  
 | rename result.* AS *
-|  table splunk_server, splunk_server_group, guid, site, status, is_captain, preferred_captain, adhoc_searchhead, replication_port, replication_use_ssl, advertise_restart_required, , last_heartbeat, pending_job_count</query>
+|  table splunk_server, guid, shcluster_label, site, status, shc_deployer, shc_deployer_dns, shc_deployer_ip, conf_deploy_fetch_url, is_captain, preferred_captain, adhoc_searchhead, replication_port, replication_use_ssl, advertise_restart_required, last_heartbeat, pending_job_count</query>
           <earliest>0</earliest>
           <sampleRatio>1</sampleRatio>
         </search>

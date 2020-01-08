@@ -261,7 +261,7 @@
           <latest>$timefield.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
-        <option name="count">5</option>
+        <option name="count">1</option>
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
