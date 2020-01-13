@@ -1811,7 +1811,7 @@
             drawNetwork();
 
             // bootstrap tables
-            var server_server_cols = ["splunk_server", "product_type", "version", "server_roles", "os_name_extended", "os_version", "cpu_arch", "numberOfCores", "numberOfVirtualCores", "physicalMemoryMB", "fips_mode", "isForwarding", "isFree", "isTrial", "kvStoreStatus", "licenseState", "master_uri"];
+            var server_server_cols = ["splunk_server", "splunk_server_ip", "product_type", "version", "server_roles", "os_name_extended", "os_version", "cpu_arch", "numberOfCores", "numberOfVirtualCores", "physicalMemoryMB", "fips_mode", "isForwarding", "isFree", "isTrial", "kvStoreStatus", "licenseState", "master_uri"];
             makeTable('#splunk_servers_table', server_server_cols, splunk_servers);
 
             var server_settings_cols = ["splunk_server", "SPLUNK_DB", "SPLUNK_HOME", "appServerPorts", "enableSplunkWebSSL", "httpport", "kvStoreDisabled", "kvStorePort", "mgmtHostPort", "minFreeSpace", "pass4SymmKey", "serverName", "sessionTimeout", "startwebserver", "trustedIP"];
