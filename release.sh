@@ -25,8 +25,8 @@ $DIR/splunk_app/build.sh
 $DIR/report_builder/build.sh
 $DIR/engagement_export/build.sh
 
-githubrelease release scalatar/splunk-engagement-healthcheck create $VERSION --prerelease
-githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION $DIR/splunk_app/dist/*.tgz
-githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION $DIR/report_builder/dist/*.tgz
-githubrelease asset scalatar/splunk-engagement-healthcheck upload $VERSION $DIR/engagement_export/dist/*.zip
-githubrelease release scalatar/splunk-engagement-healthcheck publish $VERSION
+githubrelease release mobia-security-services/splunk-engagement-healthcheck create $VERSION --prerelease
+githubrelease asset mobia-security-services/splunk-engagement-healthcheck upload $VERSION $DIR/splunk_app/dist/*.tgz
+githubrelease asset mobia-security-services/splunk-engagement-healthcheck upload $VERSION $DIR/report_builder/dist/*.tgz
+githubrelease asset mobia-security-services/splunk-engagement-healthcheck upload $VERSION $DIR/engagement_export/dist/*.zip
+githubrelease release mobia-security-services/splunk-engagement-healthcheck publish $VERSION
