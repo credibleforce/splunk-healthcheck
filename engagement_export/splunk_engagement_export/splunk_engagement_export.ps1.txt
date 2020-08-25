@@ -9,7 +9,7 @@ Get-Content $("{0}\etc\apps\engagement_healthcheck\local\savedsearches.conf" -f 
     $SPLUNK_BIN = $("{0}bin\splunk" -f $SPLUNK_HOME) 
     write-output $("Exporting: {0}" -f $savedsearch)
     write-output $("Running: {0}" -f  $command)
-    &$SPLUNK_BIN $args search  $("| savedsearch {0}" -f $savedsearch) -auth $splunk_auth -app engagement_healthcheck -maxout 0 -preview 0 -output json -earliest_time -24h -latest_time now > $("{0}/engagement_data/{1}.json" -f $PSScriptRoot,$savedsearch)
+    &$SPLUNK_BIN $args search  $("| savedsearch {0}" -f $savedsearch) -auth $splunk_auth -app engagement_healthcheck -maxout 0 -preview 0 -output json -earliest_time -7d -latest_time now > $("{0}/engagement_data/{1}.json" -f $PSScriptRoot,$savedsearch)
     write-output "Complete."
 }
 
