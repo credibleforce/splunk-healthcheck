@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ ! -d engagement_data ]; then
+mkdir engagement_data
+else
+rm -rf engagement_data/*
+fi
+
 for s in $(grep -E "^\[.+]$" /opt/splunk/etc/apps/engagement_healthcheck/local/savedsearches.conf | sed 's/\[//g' | sed 's/\]//g'); do
 echo "-------------------------------"
 echo "Exporting: $s"
@@ -9,4 +15,3 @@ done
 echo "Creating archive of reports..."
 tar -zcvf engagement_data.tgz engagement_data/
 echo "Done. Please send engagement_data.tgz to PS Engineer"
-
