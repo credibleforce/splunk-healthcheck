@@ -21,7 +21,7 @@ https://github.com/mobia-security-services/splunk-engagement-healthcheck/release
 
 8. Run the splunk_engagement_export.sh script as the splunk user to start the export `./splunk_engagement_export.sh`
 
-9. The script assumes SPLUNK_HOME is located in /opt/splunk and pulls data from the past 24 hours. In the case either of these parameters need to be changed update the script.
+9. The script assumes SPLUNK_HOME is located in /opt/splunk and pulls data from the past 7 days. In the case either of these parameters need to be changed update the script.
 
 10. Once complete the archive `engagement_data.tgz` will contain the results of the export
 
