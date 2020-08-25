@@ -5,13 +5,13 @@ A set of tools for information gathering and summarziation of Splunk installatio
 ## Exporting Data
 
 1. Download the latest [Splunk Engagement Healthcheck App](
-https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/latest/download/engagement_healthcheck.tgz)
+https://github.com/mobia-security-services/splunk-engagement-healthcheck/releases/latest/download/engagement_healthcheck.tgz)
 
 2. On the Distributed Monitoring Console install the Splunk Engagement Healthcheck app
 
 3. To preview the saved searches that will be retrieved navigate to the Deployment Dashboard
 
-4. To export the saved search data download the [Splunk Engagement Export Tool](https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/latest/download/engagement_export.zip)
+4. To export the saved search data download the [Splunk Engagement Export Tool](https://github.com/mobia-security-services/splunk-engagement-healthcheck/releases/latest/download/engagement_export.zip)
 
 5. Copy the archive to the Distributed Monitoring Console
 
@@ -30,7 +30,7 @@ https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/lates
 ## Analysis in Splunk
 
 1. On your local Splunk instance install the [Splunk Engagement Healthcheck App](
-https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/latest/download/engagement_healthcheck.tgz)
+https://github.com/mobia-security-services/splunk-engagement-healthcheck/releases/latest/download/engagement_healthcheck.tgz)
 
 2. Copy the `engagement_data.tgz` archive to your local Splunk instance
 
@@ -78,7 +78,7 @@ https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/lates
 
 4. Move `engagment_data` folder to a location on the local Splunk instance where Splunk will be able to read the files `mv engagment_data /var/customer-data/<customername>_engagement_name`
 
-5. Download the latest [Report Builder](https://github.com/ps-sec-analytics/splunk-engagement-healthcheck/releases/latest/download/report_builder.tgz)
+5. Download the latest [Report Builder](https://github.com/mobia-security-services/splunk-engagement-healthcheck/releases/latest/download/report_builder.tgz)
 
 6. On your local Splunk instance upload and extract report_builder `tar -zxvf report_builder.tgz`
 
