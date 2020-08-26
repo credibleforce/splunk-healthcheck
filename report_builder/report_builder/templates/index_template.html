@@ -1390,8 +1390,8 @@
                     y: search_head_pos.y
                 };
 
-                var search_head_cluster_captain = (Array.isArray(searchhead_cluster_summary) && typeof (searchhead_cluster_summary[0].result) != "undefined") ? searchhead_cluster_summary.find(element => element.result.is_captain == "1") : undefined;
-                var search_head_cluster_member = (Array.isArray(searchhead_cluster_summary) && typeof (searchhead_cluster_summary[0].result) != "undefined") ? searchhead_cluster_summary.find(element => element.result.is_captain == "0") : undefined;
+                var search_head_cluster_captain = (Array.isArray(searchhead_cluster_summary) && searchhead_cluster_summary.length>0 && typeof (searchhead_cluster_summary[0].result) != "undefined") ? searchhead_cluster_summary.find(element => element.result.is_captain == "1") : undefined;
+                var search_head_cluster_member = (Array.isArray(searchhead_cluster_summary) && searchhead_cluster_summary.length>0 && typeof (searchhead_cluster_summary[0].result) != "undefined") ? searchhead_cluster_summary.find(element => element.result.is_captain == "0") : undefined;
 
                 // only add shc tier if we can find a captain in the summary info
                 if (typeof (search_head_cluster_captain) != "undefined") {
@@ -1496,15 +1496,18 @@
                     if ((data.result.server_roles.includes("cluster_slave") || data.result.server_roles.includes("cluster_master"))) {
                         if (typeof (node.x) == "undefined") component_count.clustered_indexer++;
                         var cluster_info = index_cluster_nodes.find(element => Object.keys(element.splunk_servers).includes(data.result.splunk_server));
-                        var cluster_node_info = cluster_info.splunk_servers[data.result.splunk_server];
+                        // it is possible we have roles assigned to cluster nodes that aren't in the cluster (e.g. cold backup cm).
+                        if(typeof(cluster_info)!=="undefined"){
+                            var cluster_node_info = cluster_info.splunk_servers[data.result.splunk_server];
 
-                        edges.push({
-                            from: cluster_info.cluster_label, to: data.result.splunk_server, label: cluster_node_info.site, length: EDGE_LENGTH_MAIN
-                        });
+                            edges.push({
+                                from: cluster_info.cluster_label, to: data.result.splunk_server, label: cluster_node_info.site, length: EDGE_LENGTH_MAIN
+                            });
 
-                        if (typeof (node.x) == "undefined") {
-                            node.x = indexer_cluster_pos.x + (core_pos.node_padding * component_count.clustered_indexer);
-                            node.y = indexer_cluster_pos.y + core_pos.node_padding + (core_pos.node_padding / 2 * (component_count.clustered_indexer % 2));
+                            if (typeof (node.x) == "undefined") {
+                                node.x = indexer_cluster_pos.x + (core_pos.node_padding * component_count.clustered_indexer);
+                                node.y = indexer_cluster_pos.y + core_pos.node_padding + (core_pos.node_padding / 2 * (component_count.clustered_indexer % 2));
+                            }
                         }
                     // non-clustered indexers
                     } else if (data.result.server_roles.includes("indexer")) {
