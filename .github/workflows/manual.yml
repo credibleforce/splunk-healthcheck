@@ -1,0 +1,65 @@
+name: Releases
+
+on: 
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, e.g. v1.0, v20.15.10
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # Create a new release from version tag
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+    # Bundle assets for release
+    - name: Build splunk_app release asset
+      run: |
+        awk -v ver=$(cat sversion.txt) '{ gsub(/[0-9]+\.[0-9]+\.[0-9]+/,ver); print }' engagement_healthcheck/local/app.conf > app.conf
+        mv app.conf splunk_app/engagement_healthcheck/local/app.conf
+        tar -zcvf engagement_healthcheck.tgz -C splunk_app engagement_healthcheck
+    - name: Build report_builder release asset
+      run: |
+        tar -zcvf report_builder.tgz -C report_builder report_builder
+    - name: Build engagement_export release asset
+      run: |
+        cd engagement_export
+        zip -r ../engagement_export.zip splunk_engagement_export
+    # Upload release assets
+    - name: Upload engagement_healthcheck Release Asset
+      id: upload-engagement-healthcheck-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./engagement_healthcheck.tgz
+        asset_name: engagement_healthcheck.tgz
+        asset_content_type: application/tgz  
+    - name: Upload report_builder Release Asset
+      id: upload-report-builder-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./report_builder.tgz
+        asset_name: report_builder.tgz
+        asset_content_type: application/tgz  
+    - name: Upload engagement_export Release Asset
+      id: upload-engagement-export-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./engagement_export.zip
+        asset_name: engagement_export.zip
+        asset_content_type: application/zip  
