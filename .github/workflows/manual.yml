@@ -10,19 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    # Create a new release from version tag
-    - name: Create Release
-      uses: actions/create-release@v1
-      id: create_release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+    
     # Bundle assets for release
     - name: Build splunk_app release asset
       run: |
-        awk -v ver=$(cat sversion.txt) '{ gsub(/[0-9]+\.[0-9]+\.[0-9]+/,ver); print }' engagement_healthcheck/local/app.conf > app.conf
+        awk -v ver=$(cat version.txt | sed -e 's/^v//g') '{ gsub(/[0-9]+\.[0-9]+\.[0-9]+/,ver); print }' splunk_app/engagement_healthcheck/local/app.conf > app.conf
         mv app.conf splunk_app/engagement_healthcheck/local/app.conf
         tar -zcvf engagement_healthcheck.tgz -C splunk_app engagement_healthcheck
     - name: Build report_builder release asset
@@ -32,6 +24,15 @@ jobs:
       run: |
         cd engagement_export
         zip -r ../engagement_export.zip splunk_engagement_export
+    # Create a new release from version tag
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
     # Upload release assets
     - name: Upload engagement_healthcheck Release Asset
       id: upload-engagement-healthcheck-release-asset
