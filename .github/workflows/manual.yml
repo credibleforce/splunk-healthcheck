@@ -14,7 +14,7 @@ jobs:
     # Bundle assets for release
     - name: Build splunk_app release asset
       run: |
-        awk -v ver=$(cat version.txt | sed -e 's/^v//g') '{ gsub(/[0-9]+\.[0-9]+\.[0-9]+/,ver); print }' splunk_app/engagement_healthcheck/local/app.conf > app.conf
+        awk -v ver=$(cat splunk_app/engagement_healthcheck/version.txt | sed -e 's/^v//g') '{ gsub(/[0-9]+\.[0-9]+\.[0-9]+/,ver); print }' splunk_app/engagement_healthcheck/local/app.conf > app.conf
         mv app.conf splunk_app/engagement_healthcheck/local/app.conf
         tar -zcvf engagement_healthcheck.tgz -C splunk_app engagement_healthcheck
     - name: Build report_builder release asset
